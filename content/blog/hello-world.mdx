@@ -1,0 +1,50 @@
+---
+title: "Hello, world"
+date: "2026-01-01"
+description: "A sample post that shows off the frontmatter fields and basic Markdown."
+tags: ["example", "getting-started"]
+---
+
+Welcome to the blog. This post demonstrates everything the MDX pipeline
+supports out of the box — no configuration needed, just drop `.mdx` files
+into `/content/blog` and they appear here and in the Blogs window.
+
+## Frontmatter
+
+Every post starts with a frontmatter block:
+
+```yaml
+---
+title: "Your title"
+date: "2026-01-01"
+description: "Shown on the listing and in the <meta> description."
+tags: ["whatever", "you", "want"]
+---
+```
+
+All four fields are required. Bad frontmatter fails the build loudly, which
+is a feature — you'll catch typos before they hit production.
+
+## Markdown basics
+
+**Bold** and *italic* work. So do [links](/blog), `inline code`, and:
+
+- Bulleted
+- Lists
+- Like this
+
+Blockquotes render with an accent border:
+
+> Write like the reader has one tab open and two others waiting.
+
+## Code blocks
+
+Fenced code blocks render with a monospace block:
+
+```ts
+export function greet(name: string): string {
+  return `Hello, ${name}.`
+}
+```
+
+That's it. Delete this file, write your own.
