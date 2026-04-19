@@ -81,6 +81,22 @@ export interface SiteConfig {
 
 // ── EDIT BELOW ──────────────────────────────────────────────────────
 
+// ── Single source of truth — edit these, everything else derives. ───
+
+const DOB            = new Date("14 Feb 2005")
+const EMAIL          = "realraghavaditya@gmail.com"
+const GITHUB         = "raghav-45"
+const TWITTER        = "adityaxraghav"
+const CAL            = "adityaraghav"
+
+function getAge(dob: Date): number {
+  const today = new Date()
+  let age = today.getFullYear() - dob.getFullYear()
+  const m = today.getMonth() - dob.getMonth()
+  if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--
+  return age
+}
+
 export const siteConfig: SiteConfig = {
   personal: {
     firstName: "Aditya",
@@ -92,29 +108,29 @@ export const siteConfig: SiteConfig = {
     tagline:
       "Building data platforms and AI-powered systems at a YC W26 startup. I ship production-grade pipelines, RAG engines, and full-stack products — from React to PostgreSQL to AWS.",
     location: "New Delhi, India",
-    age: 21,
+    age: getAge(DOB),
     avatar: "/avatar.svg",
-    username: "Raghav-45",
+    username: GITHUB,
   },
 
   social: {
-    github: "https://github.com/Raghav-45",
-    twitter: "https://x.com/adityaxraghav",
-    blog: "https://github.com/Raghav-45",
-    githubUsername: "Raghav-45",
-    twitterHandle: "adityaxraghav",
+    github: `https://github.com/${GITHUB}`,
+    twitter: `https://x.com/${TWITTER}`,
+    blog: `https://github.com/${GITHUB}`,
+    githubUsername: GITHUB,
+    twitterHandle: TWITTER,
   },
 
   contact: {
-    email: "realraghavaditya@gmail.com",
-    calendar: "https://cal.com/adityaraghav",
+    email: EMAIL,
+    calendar: `https://cal.com/${CAL}`,
     heading: "Let's Connect",
     subheading: "Open to collaborations, interesting projects, or just a conversation about engineering.",
     rows: [
-      { icon: "mail",     href: "mailto:realraghavaditya@gmail.com",     label: "Email",           mono: "realraghavaditya@gmail.com" },
-      { icon: "calendar", href: "https://cal.com/adityaraghav",           label: "Schedule a call", mono: "cal.com/adityaraghav" },
-      { icon: "twitter",  href: "https://x.com/adityaxraghav",            label: "X / Twitter",     mono: "@adityaxraghav" },
-      { icon: "github",   href: "https://github.com/Raghav-45",           label: "GitHub",          mono: "Raghav-45" },
+      { icon: "mail",     href: `mailto:${EMAIL}`,                label: "Email",           mono: EMAIL },
+      { icon: "calendar", href: `https://cal.com/${CAL}`,          label: "Schedule a call", mono: `cal.com/${CAL}` },
+      { icon: "twitter",  href: `https://x.com/${TWITTER}`,        label: "X / Twitter",     mono: `@${TWITTER}` },
+      { icon: "github",   href: `https://github.com/${GITHUB}`,    label: "GitHub",          mono: GITHUB },
     ],
   },
 
