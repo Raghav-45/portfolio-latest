@@ -96,7 +96,7 @@ export default function GitHubHeatmap() {
       dragMomentum={false}
       dragElastic={0}
       className="absolute select-none"
-      style={{ bottom: 80, right: 24, zIndex: 5 }}
+      style={{ bottom: 90, right: 24, zIndex: 5 }}
     >
       <div className="widget-handle" onPointerDown={(e) => dragControls.start(e)}>
         <div style={{ width: 24, height: 2, borderRadius: 1, background: "rgba(255,255,255,0.12)" }} />

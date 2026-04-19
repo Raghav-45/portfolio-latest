@@ -22,7 +22,7 @@ export default function VisitorWidget() {
       dragMomentum={false}
       dragElastic={0}
       className="absolute select-none"
-      style={{ bottom: 80, left: 320, zIndex: 5, width: 160 }}
+      style={{ bottom: 90, left: 320, zIndex: 5, width: 160 }}
     >
       <div className="widget-handle" onPointerDown={(e) => dragControls.start(e)}>
         <div style={{ width: 24, height: 2, borderRadius: 1, background: "rgba(255,255,255,0.12)" }} />

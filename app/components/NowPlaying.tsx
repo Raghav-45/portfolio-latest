@@ -56,7 +56,7 @@ export default function NowPlaying() {
       dragMomentum={false}
       dragElastic={0}
       className="absolute select-none"
-      style={{ bottom: 72, left: 20, zIndex: 5, width: 272 }}
+      style={{ bottom: 90, left: 20, zIndex: 5, width: 272 }}
     >
       <div className="widget-handle" onPointerDown={(e) => dragControls.start(e)}>
         <div style={{ width: 24, height: 2, borderRadius: 1, background: "rgba(255,255,255,0.12)" }} />
