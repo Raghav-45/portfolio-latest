@@ -28,33 +28,31 @@ export interface ProjectsConfig {
 export const projects: ProjectsConfig = {
   personal: [
     {
-      title: "Example Project",
-      description: "One-sentence description of what you built and why it matters.",
-      tech: ["TypeScript", "Next.js", "PostgreSQL"],
-      stars: 42,
-      link: "https://github.com/janedeveloper/example-project",
+      title: "Fantastic Robo",
+      description: "High-throughput, multi-format ingestion pipeline with adaptive extraction, OCR, semantic chunking, and a production-grade LLM load balancer for resilient RAG service levels.",
+      tech: ["Docker", "Sentry", "Vector Embeddings", "Mistral OCR", "CI/CD", "DigitalOcean"],
+      link: "https://github.com/Raghav-45/fantastic-robo",
     },
     {
-      title: "Another Project",
-      description: "A second example. Keep each description tight — two lines max reads best.",
-      tech: ["Go", "Redis"],
-      link: "https://github.com/janedeveloper/another-project",
-    },
-    {
-      title: "Paused Experiment",
-      description: "A project you started but haven't touched in a while — mark it with a status.",
-      tech: ["Rust"],
-      status: "Paused",
-      link: "https://github.com/janedeveloper/experiment",
+      title: "Thunder Forms",
+      description: "State-driven form builder with drag-and-drop composition, AI-assisted creation, and a deep analytics pipeline — shipped as a production SaaS with 10K+ visits.",
+      tech: ["Next.js", "TypeScript", "SSE", "PostgreSQL", "NextAuth.js", "Shadcn UI"],
+      link: "https://github.com/Raghav-45/thunder-forms",
     },
   ],
 
   client: [
     {
-      title: "Client Work Sample",
-      description: "Replace with a short, neutral description of client work you want to show off.",
-      tech: ["React", "TailwindCSS"],
-      link: "https://example.com",
+      title: "Human Archive Data Platform",
+      description: "Enterprise data platform for delivering TB-scale robotics datasets with multi-tenant auth and deep AWS integration.",
+      tech: ["React", "TanStack Router", "Express", "PostgreSQL", "AWS"],
+      link: "https://humanarchive.com",
+    },
+    {
+      title: "Conqr AI Legal Chatbot",
+      description: "RAG-powered legal chatbot with end-to-end document pipeline — scan detection, OCR, chunking, and Go-powered parallel processing.",
+      tech: ["Go", "RAG", "PDF.js", "OCR", "Vector Embeddings"],
+      link: "https://conqr.ai",
     },
   ],
 }
@@ -67,11 +65,11 @@ export interface ResumeProjectItem {
 
 export const resumeProjects: ResumeProjectItem[] = [
   {
-    name: "Example Project",
-    desc: "Slightly longer description suitable for a résumé — focus on outcomes, scale, and the specific technologies involved.",
+    name: "Fantastic Robo",
+    desc: "High-throughput, multi-format ingestion pipeline supporting PDFs, DOCX, PPTX, XLSX, images, and emails with adaptive extraction, OCR, semantic chunking, and embedding batching. Scalable vector search layer with HNSW-based similarity matching, dynamic Top-K and Hybrid retrieval. Production-grade LLM load balancer with smart request routing and telemetry feedback.",
   },
   {
-    name: "Another Project",
-    desc: "Second résumé-worthy project. Two lines is plenty.",
+    name: "Thunder Forms",
+    desc: "State-driven form builder with drag-and-drop composition, schema-driven rendering, and an AI-assisted creation pipeline. Deep analytics pipeline aggregating event-level data into session-aware metrics (impressions, bounce rate, live users); shipped as a production SaaS with 10K+ visits.",
   },
 ]

@@ -16,9 +16,9 @@ export interface LinkItem {
 }
 
 export const links: LinkItem[] = [
-  { title: "The Zen of Erlang",      author: "Fred Hebert",     url: "https://ferd.ca/the-zen-of-erlang.html",                  tag: "systems" },
-  { title: "Fearless Concurrency",   author: "The Rust Book",   url: "https://doc.rust-lang.org/book/ch16-00-concurrency.html", tag: "rust" },
-  { title: "without.boats",          author: "withoutboats",    url: "https://without.boats",                                   tag: "rust" },
-  { title: "Meditations",            author: "Marcus Aurelius", url: "https://www.gutenberg.org/ebooks/2680",                   tag: "philosophy" },
-  { title: "Solana Program Library", author: "Solana Labs",     url: "https://spl.solana.com",                                  tag: "solana" },
+  { title: "Go Concurrency Patterns",     author: "Rob Pike",            url: "https://go.dev/blog/pipelines",                              tag: "go" },
+  { title: "RAG is More Than Embeddings", author: "LlamaIndex",          url: "https://docs.llamaindex.ai/en/stable/",                      tag: "ai" },
+  { title: "Designing Data-Intensive Apps", author: "Martin Kleppmann",  url: "https://dataintensive.net/",                                 tag: "systems" },
+  { title: "The Twelve-Factor App",       author: "Heroku",              url: "https://12factor.net/",                                      tag: "architecture" },
+  { title: "React Server Components",     author: "Dan Abramov",         url: "https://react.dev/blog/2023/03/22/react-labs-what-we-have-been-working-on-march-2023", tag: "react" },
 ]

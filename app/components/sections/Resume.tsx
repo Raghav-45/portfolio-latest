@@ -70,45 +70,6 @@ export default function Resume({ compact = false }: { compact?: boolean }) {
       </div>
 
       <div className="space-y-5">
-        {/* Skills */}
-        <section>
-          <h2
-            className="text-[11px] font-semibold uppercase tracking-widest mb-3"
-            style={{ color: "var(--text-secondary)" }}
-          >
-            Skills
-          </h2>
-          <div className="space-y-2">
-            {Object.entries(skills).map(([category, items]) => (
-              <div key={category} className="flex gap-3">
-                <span
-                  className="text-[10px] w-32 flex-none pt-0.5"
-                  style={{ color: "var(--text-muted)" }}
-                >
-                  {category}
-                </span>
-                <div className="flex flex-wrap gap-1.5">
-                  {items.map((skill) => (
-                    <span
-                      key={skill}
-                      className="text-[10px] px-2 py-0.5 rounded-full"
-                      style={{
-                        background: "var(--separator)",
-                        border: "1px solid var(--widget-border)",
-                        color: "var(--text-secondary)",
-                      }}
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <div style={{ height: "1px", background: "var(--separator)" }} />
-
         {/* Experience */}
         <section>
           <h2
@@ -195,13 +156,13 @@ export default function Resume({ compact = false }: { compact?: boolean }) {
 
         <div style={{ height: "1px", background: "var(--separator)" }} />
 
-        {/* Teaching */}
+        {/* Achievements */}
         <section>
           <h2
             className="text-[11px] font-semibold uppercase tracking-widest mb-3"
             style={{ color: "var(--text-secondary)" }}
           >
-            Teaching
+            Achievements
           </h2>
           <ul className="space-y-1 pl-3">
             {teaching.map((t, i) => (
@@ -240,6 +201,45 @@ export default function Resume({ compact = false }: { compact?: boolean }) {
             <span className="text-[10px] flex-none" style={{ color: "var(--text-muted)" }}>
               {education.period}
             </span>
+          </div>
+        </section>
+
+        <div style={{ height: "1px", background: "var(--separator)" }} />
+
+        {/* Skills */}
+        <section>
+          <h2
+            className="text-[11px] font-semibold uppercase tracking-widest mb-3"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            Skills
+          </h2>
+          <div className="space-y-2">
+            {Object.entries(skills).map(([category, items]) => (
+              <div key={category} className="flex gap-3">
+                <span
+                  className="text-[10px] w-32 flex-none pt-0.5"
+                  style={{ color: "var(--text-muted)" }}
+                >
+                  {category}
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {items.map((skill) => (
+                    <span
+                      key={skill}
+                      className="text-[10px] px-2 py-0.5 rounded-full"
+                      style={{
+                        background: "var(--separator)",
+                        border: "1px solid var(--widget-border)",
+                        color: "var(--text-secondary)",
+                      }}
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </section>
       </div>

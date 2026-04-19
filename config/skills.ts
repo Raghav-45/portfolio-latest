@@ -12,8 +12,11 @@
 export type Skills = Record<string, string[]>
 
 export const skills: Skills = {
-  "Languages":         ["TypeScript", "JavaScript", "Go", "Python", "SQL"],
-  "Frontend":          ["React", "Next.js", "TailwindCSS", "Framer Motion"],
-  "Backend":           ["Node.js", "FastAPI", "PostgreSQL", "Redis"],
-  "DevOps / Tooling":  ["Docker", "GitHub Actions", "AWS", "Vercel"],
+  "Languages":         ["Go", "JavaScript", "TypeScript", "Python", "Java", "C"],
+  "Frontend":          ["React.js", "Next.js", "TanStack Query", "Zustand", "Redux", "Framer Motion"],
+  "Backend":           ["Node.js", "Express", "Bun", "FastAPI", "WebSockets", "GraphQL", "Langchain"],
+  "Generative AI":     ["MCP", "Agents", "RAG", "Vector DBs", "LangGraph"],
+  "Databases":         ["PostgreSQL", "MongoDB", "Redis", "Cassandra", "Prisma", "Drizzle", "TypeORM"],
+  "DevOps / Cloud":    ["Docker", "AWS", "Cognito", "S3", "Lambda", "CloudFront", "CI/CD", "DigitalOcean"],
+  "Other":             ["DSA", "Puppeteer", "Chrome Extensions", "Web Scraping", "Discord Bots", "Telegram Bots"],
 }

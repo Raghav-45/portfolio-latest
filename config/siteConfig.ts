@@ -83,44 +83,44 @@ export interface SiteConfig {
 
 export const siteConfig: SiteConfig = {
   personal: {
-    firstName: "Jane",
-    lastName: "Developer",
-    fullName: "Jane Developer",
-    initials: "JD",
-    role: "Software Engineer",
+    firstName: "Aditya",
+    lastName: "",
+    fullName: "Aditya",
+    initials: "AD",
+    role: "Full Stack Engineer",
     shortRole: "Full-Stack Software Engineer",
     tagline:
-      "A short, opinionated sentence about what you build and why it matters. Keep it two sentences at most — this is the first thing visitors read.",
-    location: "Earth",
-    age: 20,
+      "Building data platforms and AI-powered systems at a YC W26 startup. I ship production-grade pipelines, RAG engines, and full-stack products — from React to PostgreSQL to AWS.",
+    location: "New Delhi, India",
+    age: 21,
     avatar: "/avatar.svg",
-    username: "janedeveloper",
+    username: "Raghav-45",
   },
 
   social: {
-    github: "https://github.com/janedeveloper",
-    twitter: "https://x.com/janedeveloper",
-    blog: "https://example.com/blog",
-    githubUsername: "janedeveloper",
-    twitterHandle: "janedeveloper",
+    github: "https://github.com/Raghav-45",
+    twitter: "https://x.com/adityaxraghav",
+    blog: "https://github.com/Raghav-45",
+    githubUsername: "Raghav-45",
+    twitterHandle: "adityaxraghav",
   },
 
   contact: {
-    email: "hello@example.com",
-    calendar: "https://cal.com/janedeveloper",
+    email: "realraghavaditya@gmail.com",
+    calendar: "https://cal.com/adityaraghav",
     heading: "Let's Connect",
-    subheading: "Open to collaborations, freelance work, or just a conversation.",
+    subheading: "Open to collaborations, interesting projects, or just a conversation about engineering.",
     rows: [
-      { icon: "mail",     href: "mailto:hello@example.com",             label: "Email",           mono: "hello@example.com" },
-      { icon: "calendar", href: "https://cal.com/janedeveloper",         label: "Schedule a call", mono: "cal.com/janedeveloper" },
-      { icon: "twitter",  href: "https://x.com/janedeveloper",           label: "X / Twitter",     mono: "@janedeveloper" },
-      { icon: "github",   href: "https://github.com/janedeveloper",      label: "GitHub",          mono: "janedeveloper" },
+      { icon: "mail",     href: "mailto:realraghavaditya@gmail.com",     label: "Email",           mono: "realraghavaditya@gmail.com" },
+      { icon: "calendar", href: "https://cal.com/adityaraghav",           label: "Schedule a call", mono: "cal.com/adityaraghav" },
+      { icon: "twitter",  href: "https://x.com/adityaxraghav",            label: "X / Twitter",     mono: "@adityaxraghav" },
+      { icon: "github",   href: "https://github.com/Raghav-45",           label: "GitHub",          mono: "Raghav-45" },
     ],
   },
 
   seo: {
-    title: "Jane Developer — Portfolio",
-    description: "Personal portfolio and writing by Jane Developer.",
+    title: "Aditya — Full Stack Engineer",
+    description: "Full Stack Engineer building data platforms and AI systems at a YC W26 startup. Portfolio showcasing production-grade pipelines, RAG engines, and open-source contributions.",
   },
 
   resumeLink: "https://example.com/resume",

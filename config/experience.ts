@@ -28,39 +28,45 @@ export interface ExperienceItem {
 
 export const experience: ExperienceItem[] = [
   {
-    company: "Acme Corp",
-    role: "Senior Software Engineer",
-    period: "Jan 2024 – Present",
-    description: "Short one-line summary of what you do here.",
-    tech: ["TypeScript", "React", "Node.js", "PostgreSQL"],
+    company: "Human Archive (YC W26)",
+    role: "Full Stack Engineer",
+    period: "Feb 2026 – Present",
+    description: "Building the company's data platform for delivering TB-scale robotics datasets to enterprise customers.",
+    tech: ["React", "TanStack Router", "Express", "PostgreSQL", "AWS", "Cognito", "S3", "Lambda", "CloudFront"],
     achievements: [
-      "Led the migration of a critical service from X to Y with zero downtime.",
-      "Mentored three junior engineers through design reviews and pairing.",
-      "Shipped a feature that drove a measurable 12% improvement in activation.",
+      "Led a team of engineers to build the data platform end-to-end: React with TanStack Router, Express API, PostgreSQL, and deep AWS integration (Cognito, S3, Lambda, CloudFront signed URLs).",
+      "Designed the dataset pipeline with recursive S3 folder resolution, batched ingestion with conflict-safe upserts.",
+      "Built a multi-tenant auth layer with Cognito JWT verification, Postgres-enriched role/org profiles, and role-gated UI branching entire component subtrees per user type.",
     ],
   },
   {
-    company: "Globex",
-    role: "Software Engineer",
-    period: "Jun 2022 – Dec 2023",
-    description: "What you built here, in a sentence.",
-    tech: ["Go", "Kubernetes", "Redis"],
+    company: "Conqr AI",
+    role: "Full Stack Engineer",
+    period: "May 2025 – Jan 2026",
+    description: "Built a legal chatbot using RAG and engineered an end-to-end document processing pipeline.",
+    tech: ["Go", "RAG", "PDF.js", "OCR", "Vector Embeddings"],
     achievements: [
-      "Built and owned the internal deploy pipeline used by 40+ engineers.",
-      "Reduced p99 latency of the core API from 800ms to 110ms.",
+      "Built a Legal Chatbot using RAG, leveraging PDF.js and page-wise chunking to maintain context across sections.",
+      "Engineered an end-to-end document pipeline: scan detection, OCR on demand, chunking, and metadata-backed storage.",
+      "Optimised data ingestion timeline from 5+ minutes to under a minute for ~25 documents using Go's concurrency model for parallel processing.",
     ],
     links: [
-      { type: "website", url: "https://example.com", label: "example.com" },
+      { type: "website", url: "https://conqr.ai", label: "conqr.ai" },
     ],
   },
   {
-    company: "Initech",
-    role: "Software Engineering Intern",
-    period: "Summer 2021",
-    description: "Your internship — one line.",
-    tech: ["Python", "AWS"],
+    company: "Spacedrive",
+    role: "Open Source Contributor",
+    period: "Aug 2023 – May 2025",
+    description: "Implemented 9 key features across the Spacedrive open-source file manager.",
+    tech: ["Rust", "React", "TypeScript"],
     achievements: [
-      "Wrote an internal data pipeline tool still in use today.",
+      "Implemented Copy File Path functionality and full file path display in the Inspector.",
+      "Built Quick Preview for text files with extended support for additional file types.",
+      "Added image zooming to the Quick Preview system.",
+    ],
+    links: [
+      { type: "website", url: "https://spacedrive.com", label: "spacedrive.com" },
     ],
   },
 ]
@@ -78,22 +84,29 @@ export interface ResumeExperienceItem {
 
 export const resumeExperience: ResumeExperienceItem[] = [
   {
-    company: "Acme Corp",
-    role: "Senior Software Engineer",
-    period: "Jan 2024 – Present",
+    company: "Human Archive (YC W26)",
+    role: "Full Stack Engineer",
+    period: "Feb 2026 – Present",
     bullets: [
-      "Led the migration of a critical service from X to Y with zero downtime.",
-      "Mentored three junior engineers through design reviews and pairing.",
-      "Shipped a feature that drove a measurable 12% improvement in activation.",
+      "Led a team of engineers to build the company's data platform end-to-end: React with TanStack Router, Express API, PostgreSQL, and deep AWS integration (Cognito, S3, Lambda, CloudFront signed URLs), serving as the primary tool for delivering TB-scale robotics datasets to enterprise customers.",
+      "Designed the dataset pipeline (recursive S3 folder resolution, batched ingestion with conflict-safe upserts) and a multi-tenant auth layer with Cognito JWT verification, Postgres-enriched role/org profiles, and role-gated UI branching entire component subtrees per user type.",
     ],
   },
   {
-    company: "Globex",
-    role: "Software Engineer",
-    period: "Jun 2022 – Dec 2023",
+    company: "Conqr AI",
+    role: "Full Stack Engineer",
+    period: "May 2025 – Jan 2026",
     bullets: [
-      "Built and owned the internal deploy pipeline used by 40+ engineers.",
-      "Reduced p99 latency of the core API from 800ms to 110ms.",
+      "Built a Legal Chatbot using RAG, leveraging PDF.js and page-wise chunking to maintain context across sections.",
+      "Engineered an end-to-end document pipeline: scan detection, OCR on demand, chunking, and metadata-backed storage; optimised data ingestion from 5+ minutes to under a minute for ~25 documents using Go's concurrency model.",
+    ],
+  },
+  {
+    company: "Spacedrive",
+    role: "Open Source Contributor",
+    period: "Aug 2023 – May 2025",
+    bullets: [
+      "Implemented 9 key features, including Copy File Path, displaying full file paths in the Inspector, Quick Preview for text files, and extended Quick Preview support with additional file types and image zooming.",
     ],
   },
 ]
@@ -107,12 +120,12 @@ export interface EducationItem {
 }
 
 export const education: EducationItem = {
-  school: "State University",
-  degree: "B.Sc. — Computer Science",
-  period: "2018 – 2022",
+  school: "Maharaja Agrasen Institute of Technology",
+  degree: "B.Tech — Information Technology and Engineering",
+  period: "2024 – 2028",
 }
 
 export const teaching: string[] = [
-  "Ran a weekend study group on data structures for ~15 local students.",
-  "Guest-lectured an intro-to-web-dev class at my alma mater.",
+  "3rd Runner Up @ Bajaj HackRX 6.0 — Awarded Larry Page Award for Best Innovation.",
+  "Top 25 @ Facebook: Pragati AI for Impact Hackathon.",
 ]

@@ -23,10 +23,10 @@ export interface StatusConfig {
 
 export const status: StatusConfig = {
   available: true,
-  label: "Open to work",
+  label: "Building @ YC W26",
   currently: [
-    { label: "Building", value: "Something you're excited about" },
-    { label: "Reading",  value: "A book that's changed how you think" },
-    { label: "Writing",  value: "Your next blog post" },
+    { label: "Building", value: "Data platform at Human Archive (YC W26)" },
+    { label: "Hacking",  value: "RAG pipelines & LLM load balancers" },
+    { label: "Studying", value: "B.Tech IT @ MAIT, New Delhi" },
   ],
 }
