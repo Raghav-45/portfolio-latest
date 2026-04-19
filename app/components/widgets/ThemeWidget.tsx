@@ -47,7 +47,7 @@ export default function ThemeWidget() {
       dragListener={false}
       dragMomentum={false}
       dragElastic={0}
-      style={{ position: "fixed", bottom: 80, left: 560, zIndex: 5, width: 240 }}
+      style={{ position: "fixed", bottom: 90, left: 560, zIndex: 5, width: 240 }}
     >
       {/* Drag handle */}
       <div
