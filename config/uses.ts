@@ -25,7 +25,7 @@ export const uses: UseGroup[] = [
     category: "Hardware",
     items: [
       { name: "MacBook Pro", note: "primary machine" },
-      { name: "External 4K Monitor" },
+      { name: "External Monitor" },
       { name: "Mechanical Keyboard" },
       { name: "Noise-cancelling Headphones" },
     ],
@@ -34,32 +34,34 @@ export const uses: UseGroup[] = [
     category: "Editor",
     items: [
       { name: "VS Code", note: "daily driver" },
-      { name: "Neovim", note: "when I want a distraction" },
+      { name: "Claude Code", note: "AI pair programmer" },
     ],
   },
   {
     category: "Terminal",
     items: [
       { name: "iTerm2" },
-      { name: "zsh + Starship", note: "prompt" },
+      { name: "zsh", note: "shell" },
     ],
   },
   {
     category: "Tools",
     items: [
-      { name: "Raycast", note: "launcher" },
-      { name: "Linear", note: "project tracking" },
-      { name: "Notion", note: "docs" },
+      { name: "Docker", note: "containers" },
+      { name: "Postman", note: "API testing" },
+      { name: "Sentry", note: "error tracking" },
       { name: "Figma", note: "UI work" },
     ],
   },
   {
     category: "Stack defaults",
     items: [
-      { name: "TypeScript" },
-      { name: "Next.js", note: "web" },
-      { name: "PostgreSQL", note: "data" },
-      { name: "Vercel", note: "deploy" },
+      { name: "TypeScript + Go", note: "languages" },
+      { name: "React / Next.js", note: "frontend" },
+      { name: "Express / Bun", note: "backend" },
+      { name: "PostgreSQL", note: "database" },
+      { name: "AWS", note: "cloud" },
+      { name: "Prisma / Drizzle", note: "ORM" },
     ],
   },
 ]

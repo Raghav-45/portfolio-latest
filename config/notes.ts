@@ -18,11 +18,30 @@ export interface NoteItem {
 
 export const notes: NoteItem[] = [
   {
+    date: "Apr 2026",
+    body: `Working on scaling our data platform at Human Archive to handle
+TB-scale robotics datasets. The challenge of building multi-tenant
+auth with Cognito + Postgres role enrichment has been one of the
+most rewarding architecture problems I've tackled.`,
+  },
+  {
+    date: "Feb 2026",
+    body: `Joined Human Archive through YC W26. Leading the data platform
+team — building everything from the React frontend with TanStack
+Router to the Express API layer, all wired into AWS (S3, Lambda,
+CloudFront signed URLs). Startup life hits different.`,
+  },
+  {
     date: "Jan 2026",
-    body: `Delete this note and write your own.
-
-Notes are for raw, unpolished thoughts — the kind you'd write in
-a pocket notebook. Not blog posts. Not marketing copy. Just things
-you want to remember.`,
+    body: `Wrapping up my time at Conqr AI. Proud of what we shipped —
+took document ingestion from 5+ minutes down to under a minute
+for 25 docs using Go's concurrency model. The RAG legal chatbot
+is now handling real user queries in production.`,
+  },
+  {
+    date: "Oct 2025",
+    body: `Won 3rd Runner Up at Bajaj HackRX 6.0 — the Larry Page Award
+for Best Innovation. Also placed Top 25 at Facebook's Pragati AI
+for Impact Hackathon. Good streak of hackathon results lately.`,
   },
 ]
