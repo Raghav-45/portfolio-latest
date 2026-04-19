@@ -62,7 +62,7 @@ export default function QuoteWidget() {
           className="font-mono text-[9px] uppercase tracking-[0.1em] mt-2"
           style={{ color: "var(--text-faint)" }}
         >
-          — cb · writing
+          — aditya · writing
         </p>
       </div>
     </motion.div>
