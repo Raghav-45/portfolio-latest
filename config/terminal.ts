@@ -7,6 +7,8 @@
  * ─────────────────────────────────────────────────────────────
  */
 
+import { siteConfig } from "./siteConfig"
+
 export interface TerminalConfig {
   /** Content of `cat about.txt`. */
   about: string[]
@@ -24,12 +26,14 @@ export interface TerminalConfig {
   githubJson: string
 }
 
+const { personal, social, contact } = siteConfig
+
 export const terminal: TerminalConfig = {
   about: [
-    "Name:   Aditya",
-    "Age:    21",
-    "Base:   New Delhi, India",
-    "Role:   Full Stack Engineer",
+    `Name:   ${personal.fullName}`,
+    `Age:    ${personal.age}`,
+    `Base:   ${personal.location}`,
+    `Role:   ${personal.role}`,
     "",
     "Building data platforms and AI systems at Human Archive (YC W26).",
     "I ship production-grade pipelines, RAG engines, and full-stack products.",
@@ -48,9 +52,9 @@ export const terminal: TerminalConfig = {
     "Spacedrive               Aug 2023 – May 2025   Open Source Contributor",
   ],
   contact: [
-    "email:    realraghavaditya@gmail.com",
-    "github:   github.com/Raghav-45",
-    "twitter:  x.com/raghav_aditya",
+    `email:    ${contact.email}`,
+    `github:   github.com/${social.githubUsername}`,
+    `twitter:  x.com/${social.twitterHandle}`,
     "phone:    +91 9315988300",
   ],
   resume: [
@@ -58,11 +62,11 @@ export const terminal: TerminalConfig = {
     "→ loading resume.pdf",
   ],
   whoami: [
-    "Aditya",
-    "Full Stack Engineer · New Delhi, India",
+    personal.fullName,
+    `${personal.role} · ${personal.location}`,
     "",
     "Building data platforms and AI-powered",
     "systems at a YC W26 startup.",
   ],
-  githubJson: `{"login":"Raghav-45","name":"Aditya","bio":"Full Stack Engineer @ Human Archive (YC W26)","public_repos":30}`,
+  githubJson: `{"login":"${social.githubUsername}","name":"${personal.fullName}","bio":"${personal.role} @ Human Archive (YC W26)","public_repos":30}`,
 }
