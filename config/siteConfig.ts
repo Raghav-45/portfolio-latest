@@ -140,7 +140,7 @@ export const siteConfig: SiteConfig = {
     description: "Full Stack Engineer building data platforms and AI systems at a YC W26 startup. Portfolio showcasing production-grade pipelines, RAG engines, and open-source contributions.",
   },
 
-  resumeLink: "https://example.com/resume",
+  resumeLink: "https://drive.google.com/file/d/17s590R5N7Lh6oCtramv1_RdIkUGxQ87S/view",
 
   features: {
     konami: false,

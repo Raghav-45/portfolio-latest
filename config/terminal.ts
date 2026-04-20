@@ -55,7 +55,7 @@ export const terminal: TerminalConfig = {
     `email:    ${contact.email}`,
     `github:   github.com/${social.githubUsername}`,
     `twitter:  x.com/${social.twitterHandle}`,
-    "phone:    +91 9315988300",
+    // "phone:    +91 7042594978",
   ],
   resume: [
     "Opening résumé…",
