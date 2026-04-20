@@ -126,6 +126,6 @@ export const education: EducationItem = {
 }
 
 export const teaching: string[] = [
-  "3rd Runner Up @ Bajaj HackRX 6.0 — Awarded Larry Page Award for Best Innovation.",
+  // "3rd Runner Up @ Bajaj HackRX 6.0 — Awarded Larry Page Award for Best Innovation.",
   "Top 25 @ Facebook: Pragati AI for Impact Hackathon.",
 ]
