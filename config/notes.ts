@@ -38,10 +38,10 @@ took document ingestion from 5+ minutes down to under a minute
 for 25 docs using Go's concurrency model. The RAG legal chatbot
 is now handling real user queries in production.`,
   },
-  {
-    date: "Oct 2025",
-    body: `Won 3rd Runner Up at Bajaj HackRX 6.0 — the Larry Page Award
-for Best Innovation. Also placed Top 25 at Facebook's Pragati AI
-for Impact Hackathon. Good streak of hackathon results lately.`,
-  },
+//   {
+//     date: "Oct 2025",
+//     body: `Won 3rd Runner Up at Bajaj HackRX 6.0 — the Larry Page Award
+// for Best Innovation. Also placed Top 25 at Facebook's Pragati AI
+// for Impact Hackathon. Good streak of hackathon results lately.`,
+//   },
 ]
