@@ -126,6 +126,12 @@ export const education: EducationItem = {
 }
 
 export const teaching: string[] = [
-  // "3rd Runner Up @ Bajaj HackRX 6.0 — Awarded Larry Page Award for Best Innovation.",
+  "3rd Runner Up @ Bajaj HackRX 6.0: Awarded Larry Page Award for Best Innovation.",
+  "National Finalist ( Top 12 ) @ Tesco Retail Media InnovAItion Jam.",
   "Top 25 @ Facebook: Pragati AI for Impact Hackathon.",
+  // "Larry Page Award ( Top 4 ) @ Bajaj HackRX 6.0 — Agentic + RAG document system supporting 6+ formats with browser automation.",
+  // "EY Techathon 6.0 — Autonomous healthcare data validation platform with LangGraph-orchestrated multi-agent architecture.",
+  // "CyborgDB Hackathon 2025 — End-to-end encrypted RAG application with local embeddings and encrypted vector search.",
+  "1st Runner Up @ Appocalypse 2.0 MAIT: Built Thunder Forms, a customizable form-building solution.",
+  "Organizer of CSI Code Genesis 2025 ( Final round hosted at Microsoft Office ).",
 ]
