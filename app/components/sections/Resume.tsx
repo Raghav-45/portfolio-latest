@@ -65,7 +65,7 @@ export default function Resume({ compact = false }: { compact?: boolean }) {
           }}
         >
           <ExternalLink size={11} />
-          View on Notion
+          View PDF
         </a>
       </div>
 

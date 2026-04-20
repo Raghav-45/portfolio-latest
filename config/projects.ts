@@ -28,16 +28,16 @@ export interface ProjectsConfig {
 export const projects: ProjectsConfig = {
   personal: [
     {
-      title: "Fantastic Robo",
-      description: "High-throughput, multi-format ingestion pipeline with adaptive extraction, OCR, semantic chunking, and a production-grade LLM load balancer for resilient RAG service levels.",
-      tech: ["Docker", "Sentry", "Vector Embeddings", "Mistral OCR", "CI/CD", "DigitalOcean"],
-      link: "https://github.com/Raghav-45/fantastic-robo",
-    },
-    {
       title: "Thunder Forms",
       description: "State-driven form builder with drag-and-drop composition, AI-assisted creation, and a deep analytics pipeline — shipped as a production SaaS with 10K+ visits.",
       tech: ["Next.js", "TypeScript", "SSE", "PostgreSQL", "NextAuth.js", "Shadcn UI"],
       link: "https://github.com/Raghav-45/thunder-forms",
+    },
+    {
+      title: "Fantastic Robo",
+      description: "High-throughput, multi-format ingestion pipeline with adaptive extraction, OCR, semantic chunking, and a production-grade LLM load balancer for resilient RAG service levels.",
+      tech: ["Docker", "Sentry", "Vector Embeddings", "Mistral OCR", "CI/CD", "DigitalOcean"],
+      link: "https://github.com/Raghav-45/fantastic-robo",
     },
   ],
 

@@ -26,7 +26,7 @@ export const status: StatusConfig = {
   label: "Building @ YC W26",
   currently: [
     { label: "Building", value: "Data platform at Human Archive (YC W26)" },
-    { label: "Hacking",  value: "RAG pipelines & LLM load balancers" },
-    { label: "Studying", value: "B.Tech IT @ MAIT, New Delhi" },
+    { label: "Hacking",  value: "RAG pipelines & LLM" },
+    { label: "Studying", value: "Computer Science @ MAIT, New Delhi" },
   ],
 }
