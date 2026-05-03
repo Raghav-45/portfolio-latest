@@ -19,7 +19,8 @@ export default function MenuBar({ focusedApp }: { focusedApp: string | null }) {
   }, [])
 
   useEffect(() => {
-    fetch("/api/views")
+    // POST = the single increment per page visit. Other widgets just GET.
+    fetch("/api/views", { method: "POST" })
       .then((r) => r.json())
       .then((d) => { if (d.count !== null) setVisits(d.count) })
       .catch(() => {})
