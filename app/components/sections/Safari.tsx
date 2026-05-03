@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { motion } from "framer-motion"
-import { ArrowLeft, ArrowRight, RotateCw, Home, Lock } from "lucide-react"
+import { AnimatePresence, motion } from "framer-motion"
+import { ChevronLeft, ChevronRight, RotateCw, Share, Plus, Copy } from "lucide-react"
 
 /** Sentinel for the Safari-style start page (no iframe — local UI). */
 const START_URL = "safari:start"
@@ -69,6 +69,9 @@ export default function Safari({ compact = false }: { compact?: boolean }) {
   const [history, setHistory] = useState<string[]>([START_URL])
   const [cursor, setCursor] = useState(0)
   const [input, setInput] = useState("")
+  // When the URL bar is focused, show the full URL for editing; otherwise
+  // show just the host (matches real Safari).
+  const [editing, setEditing] = useState(false)
   const [loading, setLoading] = useState(false)
   // Bumped on every reload to force the iframe to re-fetch the same URL.
   const [reloadKey, setReloadKey] = useState(0)
@@ -79,9 +82,9 @@ export default function Safari({ compact = false }: { compact?: boolean }) {
   const canForward = cursor < history.length - 1
 
   useEffect(() => {
-    setInput(current === START_URL ? "" : current)
-    if (current === START_URL) setLoading(false)
-  }, [current])
+    if (!editing) setInput(onStart ? "" : prettyHost(current))
+    if (onStart) setLoading(false)
+  }, [current, editing, onStart])
 
   function pushUrl(url: string) {
     if (url === current) {
@@ -124,56 +127,118 @@ export default function Safari({ compact = false }: { compact?: boolean }) {
       animate={{ opacity: 1 }}
       className={compact ? "h-full flex flex-col" : "h-[80vh] flex flex-col"}
     >
-      {/* Toolbar */}
+      {/* Toolbar — back/forward · centered URL pill · share · new tab · tabs. */}
       <div
-        className="flex-none flex items-center gap-2 px-3 py-2"
+        className="flex-none flex items-center gap-1.5 px-3 py-2.5"
         style={{ borderBottom: "1px solid var(--separator)" }}
       >
-        <NavButton onClick={goBack} disabled={!canBack} ariaLabel="Back">
-          <ArrowLeft size={13} />
-        </NavButton>
-        <NavButton onClick={goForward} disabled={!canForward} ariaLabel="Forward">
-          <ArrowRight size={13} />
-        </NavButton>
-        <NavButton onClick={reload} ariaLabel="Reload">
-          <RotateCw size={12} className={loading ? "animate-spin" : ""} />
-        </NavButton>
-        <NavButton onClick={goHome} ariaLabel="Home">
-          <Home size={12} />
-        </NavButton>
+        <div className="flex items-center gap-0.5 flex-none">
+          <NavButton onClick={goBack} disabled={!canBack} ariaLabel="Back">
+            <ChevronLeft size={18} strokeWidth={2.25} />
+          </NavButton>
+          <NavButton onClick={goForward} disabled={!canForward} ariaLabel="Forward">
+            <ChevronRight size={18} strokeWidth={2.25} />
+          </NavButton>
+        </div>
 
         <form
-          onSubmit={(e) => { e.preventDefault(); navigate(input) }}
-          className="flex-1"
+          onSubmit={(e) => { e.preventDefault(); navigate(input); (e.target as HTMLFormElement).querySelector("input")?.blur() }}
+          className="flex-1 flex justify-center min-w-0"
         >
-          <div
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-md"
-            style={{
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid var(--separator)",
+          <motion.div
+            className="relative w-full max-w-[520px] h-7 flex items-center"
+            animate={{
+              backgroundColor: editing ? "rgba(255,255,255,0.10)" : "rgba(0,0,0,0.30)",
+              boxShadow: editing
+                ? "0 0 0 3px rgba(255,255,255,0.06), inset 0 0 0 0.5px rgba(255,255,255,0.18)"
+                : "inset 0 0 0 0.5px rgba(255,255,255,0.04)",
             }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+            style={{ borderRadius: 999 }}
           >
-            <Lock
-              size={10}
-              style={{ color: "var(--text-faint)", opacity: onStart ? 0 : 1 }}
-            />
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onFocus={(e) => e.currentTarget.select()}
+              onFocus={(e) => {
+                setEditing(true)
+                if (!onStart) setInput(current)
+                requestAnimationFrame(() => e.currentTarget.select())
+              }}
+              onBlur={() => {
+                setEditing(false)
+                setInput(onStart ? "" : prettyHost(current))
+              }}
               spellCheck={false}
-              placeholder="Search or enter website"
-              className="flex-1 bg-transparent border-none outline-none font-mono text-[11px]"
-              style={{ color: "rgba(255,255,255,0.75)" }}
+              placeholder={editing ? "Search or enter website name" : ""}
+              className="w-full bg-transparent border-none outline-none text-[12.5px] tracking-tight"
+              style={{
+                color: editing ? "rgba(255,255,255,0.92)" : "transparent",
+                textAlign: editing ? "left" : "center",
+                paddingLeft: editing ? 14 : 36,
+                paddingRight: editing ? 14 : 36,
+                transition: "color 0.15s, padding 0.18s",
+              }}
             />
-            <span
-              className="font-mono text-[9px] uppercase tracking-[0.1em] hidden sm:inline"
-              style={{ color: "var(--text-faint)" }}
-            >
-              {onStart ? "" : loading ? "Loading…" : prettyHost(current)}
-            </span>
-          </div>
+
+            {/* Read-only display layer — host name centered, fades on focus. */}
+            <AnimatePresence>
+              {!editing && (
+                <motion.div
+                  key="display"
+                  className="absolute inset-0 flex items-center justify-center pointer-events-none px-9"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.14 }}
+                >
+                  <span
+                    className="text-[12.5px] tracking-tight truncate"
+                    style={{ color: onStart ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.85)" }}
+                  >
+                    {onStart ? "Search or enter website name" : prettyHost(current)}
+                  </span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Reload icon — only visible when a page is loaded and bar isn't focused. */}
+            <AnimatePresence>
+              {!editing && !onStart && (
+                <motion.button
+                  key="reload"
+                  type="button"
+                  onMouseDown={(e) => e.preventDefault()}
+                  onClick={reload}
+                  aria-label="Reload"
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.7 }}
+                  transition={{ duration: 0.14 }}
+                  className="absolute right-1.5 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-white/10"
+                  style={{ color: "rgba(255,255,255,0.55)" }}
+                >
+                  <RotateCw size={11} className={loading ? "animate-spin" : ""} />
+                </motion.button>
+              )}
+            </AnimatePresence>
+          </motion.div>
         </form>
+
+        <div className="flex items-center gap-0.5 flex-none">
+          <NavButton
+            onClick={() => { if (!onStart) window.open(current, "_blank", "noopener,noreferrer") }}
+            disabled={onStart}
+            ariaLabel="Open in new tab"
+          >
+            <Share size={13} strokeWidth={2} />
+          </NavButton>
+          <NavButton onClick={goHome} ariaLabel="New tab">
+            <Plus size={15} strokeWidth={2.25} />
+          </NavButton>
+          <NavButton onClick={goHome} ariaLabel="Show all tabs">
+            <Copy size={13} strokeWidth={2} />
+          </NavButton>
+        </div>
       </div>
 
       {/* Viewport — start page or iframe, mutually exclusive. */}
@@ -200,13 +265,6 @@ export default function Safari({ compact = false }: { compact?: boolean }) {
                 transformOrigin: "0 0",
               }}
             />
-            {/* Fallback note — covers the most common iframe failure modes. */}
-            <p
-              className="absolute bottom-2 left-3 font-mono text-[9px] uppercase tracking-[0.12em] pointer-events-none"
-              style={{ color: "rgba(0,0,0,0.35)" }}
-            >
-              Some sites (Google, GitHub, YouTube) block iframe embedding.
-            </p>
           </>
         )}
       </div>
