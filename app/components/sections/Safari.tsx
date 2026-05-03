@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { AnimatePresence, motion } from "framer-motion"
+import { motion } from "framer-motion"
 import { ChevronLeft, ChevronRight, RotateCw, Share, Plus, Copy } from "lucide-react"
 
 /** Sentinel for the Safari-style start page (no iframe — local UI). */
@@ -145,17 +145,17 @@ export default function Safari({ compact = false }: { compact?: boolean }) {
           onSubmit={(e) => { e.preventDefault(); navigate(input); (e.target as HTMLFormElement).querySelector("input")?.blur() }}
           className="flex-1 flex justify-center min-w-0"
         >
-          <motion.div
-            className="relative w-full max-w-[520px] h-7 flex items-center"
-            animate={{
-              backgroundColor: editing ? "rgba(255,255,255,0.10)" : "rgba(0,0,0,0.30)",
-              boxShadow: editing
-                ? "0 0 0 3px rgba(255,255,255,0.06), inset 0 0 0 0.5px rgba(255,255,255,0.18)"
-                : "inset 0 0 0 0.5px rgba(255,255,255,0.04)",
+          <div
+            className="relative w-full max-w-[520px] h-7 overflow-hidden"
+            style={{
+              background: "rgba(0,0,0,0.30)",
+              boxShadow: "inset 0 0 0 0.5px rgba(255,255,255,0.05)",
+              borderRadius: 999,
             }}
-            transition={{ duration: 0.18, ease: "easeOut" }}
-            style={{ borderRadius: 999 }}
           >
+            {/* Always-mounted input. Text is invisible when not editing so the
+                animated overlay span owns the visual; cursor still works because
+                the input fills the whole pill. */}
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -170,58 +170,61 @@ export default function Safari({ compact = false }: { compact?: boolean }) {
               }}
               spellCheck={false}
               placeholder={editing ? "Search or enter website name" : ""}
-              className="w-full bg-transparent border-none outline-none text-[12.5px] tracking-tight"
+              className="absolute inset-0 w-full h-full bg-transparent border-none outline-none text-[12.5px] tracking-tight px-3.5"
               style={{
                 color: editing ? "rgba(255,255,255,0.92)" : "transparent",
-                textAlign: editing ? "left" : "center",
-                paddingLeft: editing ? 14 : 36,
-                paddingRight: editing ? 14 : 36,
-                transition: "color 0.15s, padding 0.18s",
+                caretColor: "rgba(255,255,255,0.92)",
+                textAlign: "left",
+                // Matches the overlay span: snappier in, gentler out.
+                transition: editing
+                  ? "color 0.14s ease-out"
+                  : "color 0.20s ease-out",
               }}
             />
 
-            {/* Read-only display layer — host name centered, fades on focus. */}
-            <AnimatePresence>
-              {!editing && (
-                <motion.div
-                  key="display"
-                  className="absolute inset-0 flex items-center justify-center pointer-events-none px-9"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.14 }}
-                >
-                  <span
-                    className="text-[12.5px] tracking-tight truncate"
-                    style={{ color: onStart ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.85)" }}
-                  >
-                    {onStart ? "Search or enter website name" : prettyHost(current)}
-                  </span>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {/* Animated display layer — single span persistently mounted; only
+                its `x` and opacity animate, so the slide is one fluid motion
+                with no layout reflow or background flash. */}
+            <motion.span
+              className="absolute top-1/2 text-[12.5px] tracking-tight truncate pointer-events-none whitespace-nowrap"
+              initial={false}
+              animate={{
+                left: editing ? "14px" : "50%",
+                x: editing ? 0 : "-50%",
+                y: "-50%",
+                opacity: editing ? 0 : 1,
+              }}
+              transition={{
+                left:    { duration: 0.28, ease: [0.32, 0.72, 0, 1] },
+                x:       { duration: 0.28, ease: [0.32, 0.72, 0, 1] },
+                // Gradual fade in both directions, but focus is snappier than blur.
+                opacity: editing
+                  ? { duration: 0.14, ease: "easeOut" }
+                  : { duration: 0.20, ease: "easeOut" },
+              }}
+              style={{ color: onStart ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.88)" }}
+            >
+              {onStart ? "Search or enter website name" : prettyHost(current)}
+            </motion.span>
 
-            {/* Reload icon — only visible when a page is loaded and bar isn't focused. */}
-            <AnimatePresence>
-              {!editing && !onStart && (
-                <motion.button
-                  key="reload"
-                  type="button"
-                  onMouseDown={(e) => e.preventDefault()}
-                  onClick={reload}
-                  aria-label="Reload"
-                  initial={{ opacity: 0, scale: 0.7 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.7 }}
-                  transition={{ duration: 0.14 }}
-                  className="absolute right-1.5 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-white/10"
-                  style={{ color: "rgba(255,255,255,0.55)" }}
-                >
-                  <RotateCw size={11} className={loading ? "animate-spin" : ""} />
-                </motion.button>
-              )}
-            </AnimatePresence>
-          </motion.div>
+            {/* Reload icon — fades when the bar gets focus. */}
+            <motion.button
+              type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={reload}
+              aria-label="Reload"
+              initial={false}
+              animate={{
+                opacity: !editing && !onStart ? 1 : 0,
+                pointerEvents: !editing && !onStart ? "auto" : "none",
+              }}
+              transition={{ duration: 0.18 }}
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 w-6 h-6 flex items-center justify-center rounded-full hover:bg-white/10"
+              style={{ color: "rgba(255,255,255,0.55)" }}
+            >
+              <RotateCw size={11} className={loading ? "animate-spin" : ""} />
+            </motion.button>
+          </div>
         </form>
 
         <div className="flex items-center gap-0.5 flex-none">
