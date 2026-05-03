@@ -4,12 +4,27 @@ import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { ArrowLeft, ArrowRight, RotateCw, Home, Lock } from "lucide-react"
 
-const HOME_URL = "https://en.wikipedia.org/wiki/Web_browser"
+/** Sentinel for the Safari-style start page (no iframe — local UI). */
+const START_URL = "safari:start"
+
+interface Favourite {
+  name: string
+  url: string
+  bg: string
+  fg: string
+}
+
+// Only sites that allow iframe embedding — others (Google, Facebook, X, etc.)
+// send X-Frame-Options/CSP headers that block loading inside this browser.
+const FAVOURITES: Favourite[] = [
+  { name: "Wikipedia", url: "https://www.wikipedia.org",  bg: "#ffffff", fg: "#000000" },
+  { name: "Zomato",    url: "https://www.zomato.com",     bg: "#cb202d", fg: "#ffffff" },
+]
 
 /** Turn whatever the user typed into a navigable URL. */
 function resolveInput(raw: string): string {
   const q = raw.trim()
-  if (!q) return HOME_URL
+  if (!q) return START_URL
   if (/^https?:\/\//i.test(q)) return q
   // Looks like a domain (has a dot, no spaces) → prepend https.
   if (/^[^\s]+\.[^\s]+$/.test(q)) return `https://${q}`
@@ -18,6 +33,7 @@ function resolveInput(raw: string): string {
 }
 
 function prettyHost(url: string): string {
+  if (url === START_URL) return ""
   try {
     const u = new URL(url)
     return u.host.replace(/^www\./, "") + (u.pathname === "/" ? "" : u.pathname)
@@ -29,48 +45,56 @@ function prettyHost(url: string): string {
 export default function Safari({ compact = false }: { compact?: boolean }) {
   // History stack — we control back/forward instead of relying on iframe.history,
   // which is inaccessible across origins anyway.
-  const [history, setHistory] = useState<string[]>([HOME_URL])
+  const [history, setHistory] = useState<string[]>([START_URL])
   const [cursor, setCursor] = useState(0)
-  const [input, setInput] = useState(HOME_URL)
-  const [loading, setLoading] = useState(true)
+  const [input, setInput] = useState("")
+  const [loading, setLoading] = useState(false)
   // Bumped on every reload to force the iframe to re-fetch the same URL.
   const [reloadKey, setReloadKey] = useState(0)
 
   const current = history[cursor]
+  const onStart = current === START_URL
   const canBack = cursor > 0
   const canForward = cursor < history.length - 1
 
-  useEffect(() => { setInput(current) }, [current])
+  useEffect(() => {
+    setInput(current === START_URL ? "" : current)
+    if (current === START_URL) setLoading(false)
+  }, [current])
 
-  function navigate(rawUrl: string) {
-    const next = resolveInput(rawUrl)
-    if (next === current) {
-      setReloadKey((k) => k + 1)
-      setLoading(true)
+  function pushUrl(url: string) {
+    if (url === current) {
+      if (url !== START_URL) {
+        setReloadKey((k) => k + 1)
+        setLoading(true)
+      }
       return
     }
     const trimmed = history.slice(0, cursor + 1)
-    setHistory([...trimmed, next])
+    setHistory([...trimmed, url])
     setCursor(trimmed.length)
-    setLoading(true)
+    setLoading(url !== START_URL)
+  }
+
+  function navigate(rawUrl: string) {
+    pushUrl(resolveInput(rawUrl))
   }
 
   function goBack() {
     if (!canBack) return
     setCursor((c) => c - 1)
-    setLoading(true)
   }
   function goForward() {
     if (!canForward) return
     setCursor((c) => c + 1)
-    setLoading(true)
   }
   function reload() {
+    if (onStart) return
     setReloadKey((k) => k + 1)
     setLoading(true)
   }
   function goHome() {
-    navigate(HOME_URL)
+    pushUrl(START_URL)
   }
 
   return (
@@ -108,7 +132,10 @@ export default function Safari({ compact = false }: { compact?: boolean }) {
               border: "1px solid var(--separator)",
             }}
           >
-            <Lock size={10} style={{ color: "var(--text-faint)" }} />
+            <Lock
+              size={10}
+              style={{ color: "var(--text-faint)", opacity: onStart ? 0 : 1 }}
+            />
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -122,37 +149,45 @@ export default function Safari({ compact = false }: { compact?: boolean }) {
               className="font-mono text-[9px] uppercase tracking-[0.1em] hidden sm:inline"
               style={{ color: "var(--text-faint)" }}
             >
-              {loading ? "Loading…" : prettyHost(current)}
+              {onStart ? "" : loading ? "Loading…" : prettyHost(current)}
             </span>
           </div>
         </form>
       </div>
 
-      {/* Iframe viewport — zoomed out so more of the page fits. The iframe is
-          oversized to (1/scale) and then scaled back down via transform. */}
-      <div className="flex-1 relative bg-white overflow-hidden">
-        <iframe
-          key={`${current}::${reloadKey}`}
-          src={current}
-          title="Safari"
-          referrerPolicy="no-referrer"
-          sandbox="allow-forms allow-popups allow-scripts allow-same-origin"
-          onLoad={() => setLoading(false)}
-          className="border-0"
-          style={{
-            width: "153.85%",
-            height: "153.85%",
-            transform: "scale(0.65)",
-            transformOrigin: "0 0",
-          }}
-        />
-        {/* Fallback note — covers the most common iframe failure modes. */}
-        <p
-          className="absolute bottom-2 left-3 font-mono text-[9px] uppercase tracking-[0.12em] pointer-events-none"
-          style={{ color: "rgba(0,0,0,0.35)" }}
-        >
-          Some sites (Google, GitHub, YouTube) block iframe embedding.
-        </p>
+      {/* Viewport — start page or iframe, mutually exclusive. */}
+      <div
+        className="flex-1 relative overflow-hidden"
+        style={{ background: onStart ? "var(--window-bg)" : "white" }}
+      >
+        {onStart ? (
+          <StartPage onPick={pushUrl} />
+        ) : (
+          <>
+            <iframe
+              key={`${current}::${reloadKey}`}
+              src={current}
+              title="Safari"
+              referrerPolicy="no-referrer"
+              sandbox="allow-forms allow-popups allow-scripts allow-same-origin"
+              onLoad={() => setLoading(false)}
+              className="border-0"
+              style={{
+                width: "153.85%",
+                height: "153.85%",
+                transform: "scale(0.65)",
+                transformOrigin: "0 0",
+              }}
+            />
+            {/* Fallback note — covers the most common iframe failure modes. */}
+            <p
+              className="absolute bottom-2 left-3 font-mono text-[9px] uppercase tracking-[0.12em] pointer-events-none"
+              style={{ color: "rgba(0,0,0,0.35)" }}
+            >
+              Some sites (Google, GitHub, YouTube) block iframe embedding.
+            </p>
+          </>
+        )}
       </div>
     </motion.div>
   )
@@ -176,6 +211,72 @@ function NavButton({
       style={{ color: "rgba(255,255,255,0.6)" }}
     >
       {children}
+    </button>
+  )
+}
+
+/** Safari-style start page: a "Favourites" grid of branded site tiles. */
+function StartPage({ onPick }: { onPick: (url: string) => void }) {
+  return (
+    <div className="h-full overflow-y-auto mac-scrollbar px-8 py-8">
+      <h3
+        className="text-[18px] font-semibold tracking-tight mb-6"
+        style={{ color: "rgba(255,255,255,0.92)" }}
+      >
+        Favourites
+      </h3>
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(76px,1fr))] gap-x-3 gap-y-5">
+        {FAVOURITES.map((f) => (
+          <FavTile key={f.url} fav={f} onPick={onPick} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function FavTile({
+  fav, onPick,
+}: {
+  fav: Favourite
+  onPick: (url: string) => void
+}) {
+  const [errored, setErrored] = useState(false)
+  let host = ""
+  try { host = new URL(fav.url).host } catch {}
+
+  return (
+    <button
+      type="button"
+      onClick={() => onPick(fav.url)}
+      className="group flex flex-col items-center gap-2 outline-none focus-visible:ring-2 focus-visible:ring-white/40 rounded-2xl"
+    >
+      <div
+        className="w-[58px] h-[58px] rounded-2xl flex items-center justify-center transition-transform duration-150 group-hover:scale-[1.06] group-active:scale-95"
+        style={{
+          background: fav.bg,
+          boxShadow: "0 2px 6px rgba(0,0,0,0.45), inset 0 0 0 0.5px rgba(255,255,255,0.06)",
+        }}
+      >
+        {errored ? (
+          <span className="text-[24px] font-semibold leading-none" style={{ color: fav.fg }}>
+            {fav.name[0]}
+          </span>
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={`https://www.google.com/s2/favicons?domain=${host}&sz=128`}
+            alt=""
+            className="w-8 h-8"
+            onError={() => setErrored(true)}
+          />
+        )}
+      </div>
+      <span
+        className="text-[10.5px] leading-tight text-center line-clamp-2"
+        style={{ color: "rgba(255,255,255,0.72)" }}
+      >
+        {fav.name}
+      </span>
     </button>
   )
 }
