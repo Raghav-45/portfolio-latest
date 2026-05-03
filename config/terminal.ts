@@ -47,9 +47,9 @@ export const terminal: TerminalConfig = {
     "Cloud:         AWS · S3 · Lambda · Cognito · CloudFront · Docker",
   ],
   experience: [
-    "Human Archive (YC W26)   Feb 2026 – Present   Full Stack Engineer",
-    "Conqr AI                 May 2025 – Jan 2026   Full Stack Engineer",
-    "Spacedrive               Aug 2023 – May 2025   Open Source Contributor",
+    "Human Archive (YC W26)   Feb 2026 - Present   Full Stack Engineer",
+    "Conqr AI                 May 2025 - Jan 2026   Full Stack Engineer",
+    "Spacedrive               Aug 2023 - May 2025   Open Source Contributor",
   ],
   contact: [
     `email:    ${contact.email}`,
