@@ -18,9 +18,9 @@ interface Favourite {
 // send X-Frame-Options/CSP headers that block loading inside this browser.
 // Personal projects with deployed URLs are mixed in alongside third-party sites.
 const FAVOURITES: Favourite[] = [
-  { name: "Thunder Forms", url: "https://thunderforms.in",     bg: "#7c3aed", fg: "#ffffff" },
+  { name: "Thunder Forms", url: "https://thunderforms.in",     bg: "#000", fg: "#ffffff" },
   { name: "Wikipedia",     url: "https://www.wikipedia.org",   bg: "#ffffff", fg: "#000000" },
-  { name: "Zomato",        url: "https://www.zomato.com",      bg: "#cb202d", fg: "#ffffff" },
+  { name: "Zomato",        url: "https://www.zomato.com",      bg: "#cb202d", fg: "#000000" },
 ]
 
 interface ExperienceTile {
@@ -30,12 +30,14 @@ interface ExperienceTile {
   url: string
   bg: string
   fg: string
+  /** Optional Y Combinator batch (e.g. "W26") — renders an orange YC pill. */
+  ycBatch?: string
 }
 
 // Companies I've worked at — rendered as wider cards so they read like
 // résumé entries, not app icons.
 const EXPERIENCE: ExperienceTile[] = [
-  { company: "Human Archive", role: "Full Stack Engineer",   period: "Feb 2026 - Present",  url: "https://humanarchive.ai", bg: "#18181b", fg: "#ffffff" },
+  { company: "Human Archive", role: "Full Stack Engineer",   period: "Feb 2026 - May 2026",  url: "https://humanarchive.ai", bg: "#18181b", fg: "#ffffff", ycBatch: "W26" },
   { company: "Conqr AI",      role: "Full Stack Engineer",   period: "May 2025 - Jan 2026", url: "https://conqr.ai",        bg: "#1e3a8a", fg: "#ffffff" },
   { company: "Spacedrive",    role: "Open Source Contributor", period: "Aug 2023 - May 2025", url: "https://spacedrive.com", bg: "#000000", fg: "#ffffff" },
 ]
@@ -285,7 +287,7 @@ function FavTile({
       className="group flex flex-col items-center gap-2 outline-none focus-visible:ring-2 focus-visible:ring-white/40 rounded-2xl"
     >
       <div
-        className="w-[58px] h-[58px] rounded-2xl flex items-center justify-center transition-transform duration-150 group-hover:scale-[1.06] group-active:scale-95"
+        className="w-14.5 h-14.5 rounded-2xl flex items-center justify-center transition-transform duration-150 group-hover:scale-[1.06] group-active:scale-95"
         style={{
           background: fav.bg,
           boxShadow: "0 2px 6px rgba(0,0,0,0.45), inset 0 0 0 0.5px rgba(255,255,255,0.06)",
@@ -300,7 +302,7 @@ function FavTile({
           <img
             src={`https://www.google.com/s2/favicons?domain=${host}&sz=128`}
             alt=""
-            className="w-8 h-8"
+            className="w-8 h-8 overflow-hidden rounded-sm"
             onError={() => setErrored(true)}
           />
         )}
@@ -379,10 +381,11 @@ function ExperienceCard({
       </div>
       <div className="flex-1 min-w-0">
         <p
-          className="text-[12px] font-semibold tracking-tight truncate"
+          className="text-[12px] font-semibold tracking-tight truncate flex items-center gap-1.5"
           style={{ color: "rgba(255,255,255,0.9)" }}
         >
-          {item.company}
+          <span className="truncate">{item.company}</span>
+          {item.ycBatch && <YCBadge batch={item.ycBatch} />}
         </p>
         <p
           className="text-[10.5px] truncate"
@@ -398,5 +401,35 @@ function ExperienceCard({
         {item.period}
       </span>
     </button>
+  )
+}
+
+/** Y Combinator pill — recognizable orange tile + batch (e.g. "W26"). */
+function YCBadge({ batch }: { batch: string }) {
+  return (
+    <span
+      className="inline-flex items-center gap-[3px] flex-none leading-none rounded-[3px] overflow-hidden"
+      title={`Backed by Y Combinator · ${batch}`}
+      aria-label={`Y Combinator ${batch}`}
+    >
+      <span
+        className="font-bold"
+        style={{
+          background: "#FB651E",
+          color: "#ffffff",
+          fontSize: 9,
+          padding: "2px 4px",
+          letterSpacing: "0.2px",
+        }}
+      >
+        Y
+      </span>
+      <span
+        className="font-semibold"
+        style={{ color: "#FB651E", fontSize: 9, letterSpacing: "0.4px" }}
+      >
+        {batch}
+      </span>
+    </span>
   )
 }
