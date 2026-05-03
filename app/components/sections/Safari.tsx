@@ -16,9 +16,28 @@ interface Favourite {
 
 // Only sites that allow iframe embedding — others (Google, Facebook, X, etc.)
 // send X-Frame-Options/CSP headers that block loading inside this browser.
+// Personal projects with deployed URLs are mixed in alongside third-party sites.
 const FAVOURITES: Favourite[] = [
-  { name: "Wikipedia", url: "https://www.wikipedia.org",  bg: "#ffffff", fg: "#000000" },
-  { name: "Zomato",    url: "https://www.zomato.com",     bg: "#cb202d", fg: "#ffffff" },
+  { name: "Thunder Forms", url: "https://thunderforms.in",     bg: "#7c3aed", fg: "#ffffff" },
+  { name: "Wikipedia",     url: "https://www.wikipedia.org",   bg: "#ffffff", fg: "#000000" },
+  { name: "Zomato",        url: "https://www.zomato.com",      bg: "#cb202d", fg: "#ffffff" },
+]
+
+interface ExperienceTile {
+  company: string
+  role: string
+  period: string
+  url: string
+  bg: string
+  fg: string
+}
+
+// Companies I've worked at — rendered as wider cards so they read like
+// résumé entries, not app icons.
+const EXPERIENCE: ExperienceTile[] = [
+  { company: "Human Archive", role: "Full Stack Engineer",   period: "Feb 2026 - Present",  url: "https://humanarchive.ai", bg: "#18181b", fg: "#ffffff" },
+  { company: "Conqr AI",      role: "Full Stack Engineer",   period: "May 2025 - Jan 2026", url: "https://conqr.ai",        bg: "#1e3a8a", fg: "#ffffff" },
+  { company: "Spacedrive",    role: "Open Source Contributor", period: "Aug 2023 - May 2025", url: "https://spacedrive.com", bg: "#000000", fg: "#ffffff" },
 ]
 
 /** Turn whatever the user typed into a navigable URL. */
@@ -215,22 +234,37 @@ function NavButton({
   )
 }
 
-/** Safari-style start page: a "Favourites" grid of branded site tiles. */
+/** Safari-style start page: Favourites + Projects (tiles) + Experience (cards). */
 function StartPage({ onPick }: { onPick: (url: string) => void }) {
   return (
-    <div className="h-full overflow-y-auto mac-scrollbar px-8 py-8">
+    <div className="h-full overflow-y-auto mac-scrollbar px-8 py-8 space-y-8">
+      <TileSection title="Favourites" items={FAVOURITES} onPick={onPick} />
+      <ExperienceSection items={EXPERIENCE} onPick={onPick} />
+    </div>
+  )
+}
+
+function TileSection({
+  title, items, onPick,
+}: {
+  title: string
+  items: Favourite[]
+  onPick: (url: string) => void
+}) {
+  return (
+    <section>
       <h3
         className="text-[18px] font-semibold tracking-tight mb-6"
         style={{ color: "rgba(255,255,255,0.92)" }}
       >
-        Favourites
+        {title}
       </h3>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(76px,1fr))] gap-x-3 gap-y-5">
-        {FAVOURITES.map((f) => (
+        {items.map((f) => (
           <FavTile key={f.url} fav={f} onPick={onPick} />
         ))}
       </div>
-    </div>
+    </section>
   )
 }
 
@@ -276,6 +310,92 @@ function FavTile({
         style={{ color: "rgba(255,255,255,0.72)" }}
       >
         {fav.name}
+      </span>
+    </button>
+  )
+}
+
+/** Experience: wider résumé-style cards with company, role, period. */
+function ExperienceSection({
+  items, onPick,
+}: {
+  items: ExperienceTile[]
+  onPick: (url: string) => void
+}) {
+  return (
+    <section>
+      <h3
+        className="text-[18px] font-semibold tracking-tight mb-6"
+        style={{ color: "rgba(255,255,255,0.92)" }}
+      >
+        Experience
+      </h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        {items.map((e) => (
+          <ExperienceCard key={e.url} item={e} onPick={onPick} />
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function ExperienceCard({
+  item, onPick,
+}: {
+  item: ExperienceTile
+  onPick: (url: string) => void
+}) {
+  const [errored, setErrored] = useState(false)
+  let host = ""
+  try { host = new URL(item.url).host } catch {}
+
+  return (
+    <button
+      type="button"
+      onClick={() => onPick(item.url)}
+      className="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-left outline-none transition-colors hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-white/40"
+      style={{ border: "1px solid var(--separator)" }}
+    >
+      <div
+        className="flex-none w-9 h-9 rounded-lg flex items-center justify-center"
+        style={{
+          background: item.bg,
+          boxShadow: "inset 0 0 0 0.5px rgba(255,255,255,0.08)",
+        }}
+      >
+        {errored ? (
+          <span className="text-[13px] font-semibold leading-none" style={{ color: item.fg }}>
+            {item.company[0]}
+          </span>
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={`https://www.google.com/s2/favicons?domain=${host}&sz=128`}
+            alt=""
+            className="w-5 h-5"
+            onError={() => setErrored(true)}
+          />
+        )}
+      </div>
+      <div className="flex-1 min-w-0">
+        <p
+          className="text-[12px] font-semibold tracking-tight truncate"
+          style={{ color: "rgba(255,255,255,0.9)" }}
+        >
+          {item.company}
+        </p>
+        <p
+          className="text-[10.5px] truncate"
+          style={{ color: "rgba(255,255,255,0.55)" }}
+        >
+          {item.role}
+        </p>
+      </div>
+      <span
+        className="font-mono text-[8.5px] uppercase tracking-[0.1em] flex-none whitespace-nowrap hidden sm:inline"
+        style={{ color: "var(--text-faint)" }}
+      >
+        {item.period}
       </span>
     </button>
   )
