@@ -17,7 +17,7 @@
 
 import {
   User, Briefcase, Code2, BookOpen, Mail,
-  ScrollText, TerminalSquare, Cpu, NotebookPen,
+  ScrollText, TerminalSquare, Cpu, NotebookPen, Compass,
   type LucideIcon,
 } from "lucide-react"
 import type { PostMeta } from "@/lib/posts"
@@ -31,6 +31,7 @@ import Resume     from "@/app/components/sections/Resume"
 import Terminal   from "@/app/components/sections/Terminal"
 import Uses       from "@/app/components/sections/Uses"
 import Notes      from "@/app/components/sections/Notes"
+import Safari     from "@/app/components/sections/Safari"
 
 /** Extra data threaded from the server into a window (e.g. blog posts). */
 export interface WindowContext {
@@ -42,7 +43,7 @@ export interface WindowContext {
 // One union of valid window ids keeps the rest of the app typo-safe.
 export type WindowId =
   | "about" | "experience" | "projects" | "blogs" | "contact"
-  | "resume" | "terminal" | "uses" | "notes"
+  | "resume" | "terminal" | "uses" | "notes" | "safari"
 
 export interface WindowDef {
   id: WindowId
@@ -72,6 +73,7 @@ export const windows: WindowDef[] = [
   { id: "terminal",   title: "Terminal",   icon: TerminalSquare, width: 600, height: 460, offsetX: -30, offsetY:  15, component: Terminal },
   { id: "uses",       title: "Uses",       icon: Cpu,            width: 520, height: 500, offsetX:  40, offsetY: -30, component: Uses },
   { id: "notes",      title: "Notes",      icon: NotebookPen,    width: 500, height: 480, offsetX: -40, offsetY: -25, component: Notes },
+  { id: "safari",     title: "Safari",     icon: Compass,        width: 880, height: 620, offsetX:  60, offsetY:   0, component: Safari },
 ]
 
 /** Helper used by the Desktop to look up a window by id. */
