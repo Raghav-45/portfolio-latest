@@ -1,24 +1,33 @@
 /**
- * Sitemap for search engines. Lists the home page, the blog index, and
- * every MDX post. Set NEXT_PUBLIC_SITE_URL in .env.local / production env
- * so URLs are absolute (falls back to localhost for dev).
+ * Sitemap for search engines. Lists the home page, the blog index, every
+ * MDX post, and every project detail route. URL host comes from the shared
+ * SITE_URL constant so it never drifts from layout.tsx / robots.ts.
  */
 import type { MetadataRoute } from "next"
 import { getAllPosts } from "@/lib/posts"
-
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
+import { SITE_URL } from "@/lib/site-url"
+import { projects } from "@/config/projects"
+import { slugifyProject } from "@/lib/project-slug"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts().map((post) => ({
-    url: `${BASE_URL}/blog/${post.slug}`,
+    url: `${SITE_URL}/blog/${post.slug}`,
     lastModified: new Date(post.date),
-    changeFrequency: "yearly" as const,
+    changeFrequency: "monthly" as const,
     priority: 0.6,
   }))
 
+  const projectEntries = [...projects.personal, ...projects.client].map((p) => ({
+    url: `${SITE_URL}/projects/${slugifyProject(p.title)}`,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }))
+
   return [
-    { url: `${BASE_URL}/`,     changeFrequency: "weekly",  priority: 1.0 },
-    { url: `${BASE_URL}/blog`, changeFrequency: "weekly",  priority: 0.8 },
+    { url: `${SITE_URL}/`,         changeFrequency: "weekly",  priority: 1.0 },
+    { url: `${SITE_URL}/blog`,     changeFrequency: "weekly",  priority: 0.8 },
+    { url: `${SITE_URL}/projects`, changeFrequency: "monthly", priority: 0.8 },
+    ...projectEntries,
     ...posts,
   ]
 }

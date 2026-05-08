@@ -1,35 +1,31 @@
 /**
- * /blog — listing page
- * Lists every MDX post in /content/blog, newest first.
- * Reuses the portfolio's typography so the page feels continuous
- * with the rest of the site.
+ * /projects — index page listing every project as a real, indexable URL.
+ * Reuses the styling vocabulary from /blog so the site stays consistent.
  */
-
 import Link from "next/link"
 import { ArrowUpRight, ArrowLeft } from "lucide-react"
 import type { Metadata } from "next"
-import { getAllPosts } from "@/lib/posts"
+import { getAllProjects } from "@/lib/project-lookup"
 import { siteConfig } from "@/config/siteConfig"
 
 export const metadata: Metadata = {
-  title: "Writing",
-  description: `Notes on engineering, AI systems, and building production software, by ${siteConfig.personal.fullName}.`,
-  alternates: { canonical: "/blog" },
+  title: "Projects",
+  description: `Production engineering work by ${siteConfig.personal.fullName} — data platforms, RAG pipelines, and full-stack products.`,
+  alternates: { canonical: "/projects" },
   openGraph: {
     type: "website",
-    title: "Writing",
-    description: `Notes on engineering, AI systems, and building production software, by ${siteConfig.personal.fullName}.`,
-    url: "/blog",
+    title: "Projects",
+    description: `Production engineering work by ${siteConfig.personal.fullName} — data platforms, RAG pipelines, and full-stack products.`,
+    url: "/projects",
   },
 }
 
-export default function BlogIndexPage() {
-  const posts = getAllPosts()
+export default function ProjectsIndexPage() {
+  const projects = getAllProjects()
 
   return (
     <main className="desktop-bg min-h-screen py-16 px-6">
       <div className="max-w-2xl mx-auto">
-
         <Link
           href="/"
           className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest mb-10 hover:text-white transition-colors"
@@ -42,27 +38,15 @@ export default function BlogIndexPage() {
           className="font-mono text-[10px] uppercase tracking-[0.14em] mb-2"
           style={{ color: "var(--text-muted)" }}
         >
-          Writing
+          Projects
         </p>
-        <h1 className="text-[28px] font-semibold text-white mb-10">All posts</h1>
+        <h1 className="text-[28px] font-semibold text-white mb-10">All work</h1>
 
-        {posts.length === 0 ? (
-          <div
-            className="py-16 px-6 text-center rounded-lg"
-            style={{ border: "1px dashed var(--separator)", color: "var(--text-muted)" }}
-          >
-            <p className="text-[13px] mb-2" style={{ color: "var(--text-secondary)" }}>No posts yet.</p>
-            <p className="font-mono text-[11px]">
-              Drop an <code className="text-white/70">.mdx</code> file into{" "}
-              <code className="text-white/70">/content/blog</code> and it&apos;ll appear here.
-            </p>
-          </div>
-        ) : (
         <div>
-          {posts.map((post, i) => (
+          {projects.map((project, i) => (
             <Link
-              key={post.slug}
-              href={`/blog/${post.slug}`}
+              key={project.slug}
+              href={`/projects/${project.slug}`}
               className="group flex items-start justify-between gap-4 py-4"
               style={{
                 borderTop: i === 0 ? "1px solid var(--separator)" : undefined,
@@ -71,13 +55,13 @@ export default function BlogIndexPage() {
             >
               <div className="flex-1 min-w-0">
                 <p className="text-[14px] font-medium text-white/85 group-hover:text-white transition-colors leading-snug mb-1">
-                  {post.title}
+                  {project.title}
                 </p>
                 <p className="text-[12px] leading-relaxed mb-2" style={{ color: "var(--text-muted)" }}>
-                  {post.description}
+                  {project.description}
                 </p>
                 <div className="flex flex-wrap gap-1.5">
-                  {post.tags.map((tag) => (
+                  {project.tech.map((tag) => (
                     <span
                       key={tag}
                       className="font-mono text-[9px] uppercase tracking-[0.08em] px-1.5 py-0.5 rounded"
@@ -92,8 +76,11 @@ export default function BlogIndexPage() {
                 </div>
               </div>
               <div className="flex items-center gap-2 flex-none mt-0.5">
-                <span className="font-mono text-[10px] whitespace-nowrap" style={{ color: "var(--text-faint)" }}>
-                  {formatDate(post.date)}
+                <span
+                  className="font-mono text-[10px] whitespace-nowrap"
+                  style={{ color: "var(--text-faint)" }}
+                >
+                  {project.category}
                 </span>
                 <ArrowUpRight
                   size={12}
@@ -104,13 +91,7 @@ export default function BlogIndexPage() {
             </Link>
           ))}
         </div>
-        )}
       </div>
     </main>
   )
-}
-
-function formatDate(iso: string): string {
-  const d = new Date(iso)
-  return d.toLocaleDateString("en-US", { month: "short", year: "numeric" })
 }
