@@ -7,10 +7,13 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft } from "lucide-react"
+import type { Metadata } from "next"
 import { MDXRemote } from "next-mdx-remote/rsc"
 import rehypePrettyCode, { type Options as PrettyCodeOptions } from "rehype-pretty-code"
 import { getAllPosts, getPostBySlug } from "@/lib/posts"
 import { mdxComponents } from "@/app/components/MDXComponents"
+import { siteConfig } from "@/config/siteConfig"
+import { SITE_URL } from "@/lib/site-url"
 
 // rehype-pretty-code runs at build time via Shiki — zero runtime cost, every
 // code fence in every .mdx file gets proper token colouring.
@@ -25,13 +28,39 @@ export function generateStaticParams() {
 }
 
 // Per-page <head> metadata, sourced from frontmatter.
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
   const { slug } = await params
   const post = getPostBySlug(slug)
   if (!post) return {}
+
+  const url = `${SITE_URL}/blog/${slug}`
+
   return {
     title: post.title,
     description: post.description,
+    alternates: { canonical: `/blog/${slug}` },
+    keywords: post.tags,
+    authors: [{ name: siteConfig.personal.fullName, url: SITE_URL }],
+    openGraph: {
+      type: "article",
+      url,
+      title: post.title,
+      description: post.description,
+      siteName: siteConfig.personal.fullName,
+      publishedTime: post.date,
+      authors: [siteConfig.personal.fullName],
+      tags: post.tags,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      creator: `@${siteConfig.social.twitterHandle}`,
+    },
   }
 }
 
@@ -40,8 +69,43 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   const post = getPostBySlug(slug)
   if (!post) notFound()
 
+  const url = `${SITE_URL}/blog/${slug}`
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${url}#article`,
+    headline: post.title,
+    description: post.description,
+    url,
+    datePublished: post.date,
+    dateModified: post.date,
+    keywords: post.tags.join(", "),
+    inLanguage: "en-US",
+    author: { "@id": `${SITE_URL}/#person` },
+    publisher: { "@id": `${SITE_URL}/#person` },
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+  }
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+      { "@type": "ListItem", position: 3, name: post.title, item: url },
+    ],
+  }
+
   return (
     <main className="desktop-bg min-h-screen py-16 px-6">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <article className="max-w-2xl mx-auto">
 
         <Link
