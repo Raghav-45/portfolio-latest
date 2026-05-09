@@ -116,8 +116,7 @@ export const siteConfig: SiteConfig = {
     role: "Full Stack Engineer",
     shortRole: "Full-Stack Software Engineer",
     tagline:
-      // "Full-stack developer who loves staying up to date and pushing limits with every project. Currently building data platforms and AI-powered systems at a YC W26 startup. I ship production-grade pipelines, RAG engines, and full-stack products — from React to PostgreSQL to AWS.",
-      "Full-stack engineer focused on building scalable AI-powered products and data platforms. Currently working at a YC W26 startup, shipping production-grade systems across React, PostgreSQL, AWS, and modern AI stacks from RAG pipelines to end-to-end infrastructure. Always eager to learn new technologies and take on ambitious projects that push the boundaries of what's possible.",
+      "Building data platforms and AI-powered systems at a YC W26 startup. I ship production-grade pipelines, RAG engines, and full-stack products — from React to PostgreSQL to AWS.",
     location: "New Delhi, India",
     age: getAge(DOB),
     // avatar: "/avatar.svg",
