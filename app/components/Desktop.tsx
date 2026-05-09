@@ -21,10 +21,29 @@ import type { PostMeta } from "@/lib/posts"
 
 const KONAMI = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"]
 
-export default function Desktop({ posts }: { posts: PostMeta[] }) {
+export interface DesktopDeeplink {
+  /** Window to auto-open (in addition to the default About window). */
+  window: WindowId
+  /** Optional payload — e.g. project slug to auto-select inside the Projects window. */
+  slug?: string
+}
+
+export default function Desktop({
+  posts,
+  deeplink,
+}: {
+  posts: PostMeta[]
+  deeplink?: DesktopDeeplink
+}) {
+  // Seed the open-windows stack from any URL deeplink so /projects/<slug> lands
+  // straight on the macOS UI with the right window already open.
+  const seed: WindowId[] = deeplink?.window && deeplink.window !== "about"
+    ? ["about", deeplink.window]
+    : ["about"]
+
   const [isMobile, setIsMobile] = useState<boolean | null>(null)
-  const [openWindows, setOpenWindows] = useState<WindowId[]>(["about"])
-  const [windowOrder, setWindowOrder] = useState<WindowId[]>(["about"])
+  const [openWindows, setOpenWindows] = useState<WindowId[]>(seed)
+  const [windowOrder, setWindowOrder] = useState<WindowId[]>(seed)
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number } | null>(null)
   const [showAboutOverlay, setShowAboutOverlay] = useState(false)
   const [konamiActive, setKonamiActive] = useState(false)
@@ -97,7 +116,7 @@ export default function Desktop({ posts }: { posts: PostMeta[] }) {
   ]
 
   if (isMobile === null) return null
-  if (isMobile) return <MobileLayout posts={posts} />
+  if (isMobile) return <MobileLayout posts={posts} initialProjectSlug={deeplink?.window === "projects" ? deeplink.slug : undefined} />
 
   const focusedTitle = focusedWindow ? windows.find((w) => w.id === focusedWindow)?.title ?? null : null
 
@@ -124,6 +143,10 @@ export default function Desktop({ posts }: { posts: PostMeta[] }) {
         const terminalProps = win.id === "terminal"
           ? { onOpen: toggleWindow, onClose: () => closeWindow("terminal") }
           : {}
+        // Projects accepts a deeplink slug so /projects/<slug> auto-opens the modal.
+        const projectsProps = win.id === "projects" && deeplink?.window === "projects"
+          ? { initialSlug: deeplink.slug }
+          : {}
         return (
           <MacWindow
             key={win.id}
@@ -139,7 +162,7 @@ export default function Desktop({ posts }: { posts: PostMeta[] }) {
             offsetX={win.offsetX}
             offsetY={win.offsetY}
           >
-            <Section compact {...extraProps} {...terminalProps} />
+            <Section compact {...extraProps} {...terminalProps} {...projectsProps} />
           </MacWindow>
         )
       })}

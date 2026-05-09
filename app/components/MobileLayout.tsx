@@ -22,7 +22,20 @@ const NAV = [
 
 const BORDER = "1px solid rgba(255,255,255,0.07)"
 
-export default function MobileLayout({ posts }: { posts: PostMeta[] }) {
+export default function MobileLayout({
+  posts,
+  initialProjectSlug,
+}: {
+  posts: PostMeta[]
+  initialProjectSlug?: string
+}) {
+  // Auto-scroll to the projects section if the user landed via /projects/<slug>.
+  useEffect(() => {
+    if (!initialProjectSlug) return
+    const el = document.getElementById("projects")
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" })
+  }, [initialProjectSlug])
+
   const [time, setTime] = useState("")
   const [activeId, setActiveId] = useState("about")
 
@@ -105,7 +118,7 @@ export default function MobileLayout({ posts }: { posts: PostMeta[] }) {
       </section>
 
       <section id="projects" style={{ borderBottom: BORDER }}>
-        <Projects compact />
+        <Projects compact initialSlug={initialProjectSlug} />
       </section>
 
       <section id="writing" style={{ borderBottom: BORDER }}>
