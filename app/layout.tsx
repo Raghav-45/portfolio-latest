@@ -114,6 +114,8 @@ const personSchema = {
     siteConfig.social.github,
     siteConfig.social.twitter,
     siteConfig.contact.calendar,
+    ...(siteConfig.social.linkedin ? [siteConfig.social.linkedin] : []),
+    ...(siteConfig.social.peerlist ? [siteConfig.social.peerlist] : []),
   ],
 }
 

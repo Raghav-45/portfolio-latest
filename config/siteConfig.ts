@@ -45,6 +45,11 @@ export interface Social {
   githubUsername: string
   /** Twitter/X handle, no @. */
   twitterHandle: string
+  /** Optional — surfaced in JSON-LD `sameAs` for Google knowledge-graph
+   *  cross-linking. LinkedIn is the highest-signal field for verifying
+   *  identity across platforms. */
+  linkedin?: string
+  peerlist?: string
 }
 
 export interface ContactRow {
@@ -125,6 +130,8 @@ export const siteConfig: SiteConfig = {
     blog: `https://github.com/${GITHUB}`,
     githubUsername: GITHUB,
     twitterHandle: TWITTER,
+    linkedin: "https://www.linkedin.com/in/aditya-singh-khichi/",
+    peerlist: "https://peerlist.io/adityaraghav45",
   },
 
   contact: {
