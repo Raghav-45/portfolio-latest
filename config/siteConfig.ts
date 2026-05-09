@@ -15,6 +15,10 @@ export interface Personal {
   firstName: string
   lastName: string
   fullName: string
+  /** Optional alternate name used on platforms that require a surname
+   *  (e.g. LinkedIn). Surfaced in JSON-LD `alternateName` so Google can
+   *  resolve mononym ↔ surname-form to the same Person. */
+  alternateName?: string
   /** Two-letter badge shown in the mobile status bar (e.g. "JD"). */
   initials: string
   /** Short role shown under your name in the Hero (e.g. "Frontend Engineer"). */
@@ -102,6 +106,7 @@ export const siteConfig: SiteConfig = {
     firstName: "Aditya",
     lastName: "",
     fullName: "Aditya",
+    alternateName: "Aditya Singh Khichi",
     initials: "AD",
     role: "Full Stack Engineer",
     shortRole: "Full-Stack Software Engineer",

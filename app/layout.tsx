@@ -71,7 +71,11 @@ const personSchema = {
   "@type": "Person",
   "@id": `${SITE_URL}/#person`,
   name: siteConfig.personal.fullName,
-  alternateName: siteConfig.personal.username,
+  givenName: siteConfig.personal.firstName,
+  alternateName: [
+    ...(siteConfig.personal.alternateName ? [siteConfig.personal.alternateName] : []),
+    siteConfig.personal.username,
+  ],
   url: SITE_URL,
   image: siteConfig.personal.avatar,
   jobTitle: siteConfig.personal.role,
