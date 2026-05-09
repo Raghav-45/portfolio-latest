@@ -191,21 +191,6 @@ export const projects: ProjectsConfig = {
           "A controlled cross-provider comparison rather than a separate product. The valuable bit isn't the second platform itself — it's having both running side-by-side, which let me see where each provider's tool-calling behavior diverges. The takeaway: differences are smaller than benchmark papers suggest, and orchestration choices matter more than provider choice for end-user UX.",
       },
     },
-    {
-      title: "Dispatch",
-      description: "PWA-only order and dispatch platform. Operator map view on Google Maps, Supabase backend, document upload, payment webhooks. Non-PWA visits redirect away — mobile-first by design, not by responsive accident.",
-      tech: ["Next.js", "TypeScript", "Supabase", "Google Maps", "PWA"],
-      link: "https://github.com/Raghav-45/dispatch",
-      caseStudy: {
-        metric: { value: "PWA-only", label: "mobile-first dispatch" },
-        problem:
-          "Order management apps that try to serve desktop and mobile end up doing neither well. Field operators need a phone-shaped UX — one task at a time, big tap targets, offline-tolerant — while desktop browsers see a stretched-out layout that doesn't match the actual workflow. The category needed an app that picks 'mobile' and commits.",
-        approach:
-          "Built as a PWA-only app. /order checks isPWA() at route level — visiting on desktop without PWA context shows a 3-second 'install this on your phone' card and redirects to home. Order creation flow with file upload (/api/upload-files) for order documents, operator-side map view via Google Maps (/map) for live order locations, Supabase backend for orders/operators (/api/orders, /api/operators), payment webhooks (/api/webhooks). The PWA-first stance is enforced architecturally, not just stylistically.",
-        outcome:
-          "A focused mobile-first dispatch platform that lets one architectural decision (PWA-only) cascade into every other design choice. The redirect-away-from-desktop UX is opinionated — and the opinion is the product. It's the kind of constraint that pre-empts 200 'but what about responsive at width X' debates that would otherwise consume the team for months.",
-      },
-    },
   ],
 
   client: [
