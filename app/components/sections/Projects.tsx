@@ -1,11 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ArrowUpRight, Star } from "lucide-react"
 import { motion } from "framer-motion"
 import ProjectModal from "../modals/ProjectModal"
 // Project lists live in /config/projects.ts.
 import { projects, type ProjectItem } from "@/config/projects"
+import { slugifyProject } from "@/lib/project-slug"
 
 function ProjectList({
   projects, onSelect,
@@ -85,10 +86,42 @@ function ProjectList({
   )
 }
 
-export default function Projects({ compact = false }: { compact?: boolean }) {
-  const [tab, setTab] = useState<"personal" | "client">("personal")
-  const [selected, setSelected] = useState<ProjectItem | null>(null)
+export default function Projects({
+  compact = false,
+  initialSlug,
+}: {
+  compact?: boolean
+  initialSlug?: string
+}) {
   const { personal: personalProjects, client: clientProjects } = projects
+
+  // If a deeplink slug was passed (e.g. /projects/thunder-forms), find which
+  // tab the project lives in and pre-select it so the modal opens at boot.
+  const initialTab: "personal" | "client" =
+    initialSlug && clientProjects.some((p) => slugifyProject(p.title) === initialSlug)
+      ? "client"
+      : "personal"
+  const initialSelected: ProjectItem | null = initialSlug
+    ? [...personalProjects, ...clientProjects].find(
+        (p) => slugifyProject(p.title) === initialSlug,
+      ) ?? null
+    : null
+
+  const [tab, setTab] = useState<"personal" | "client">(initialTab)
+  const [selected, setSelected] = useState<ProjectItem | null>(initialSelected)
+
+  // If the slug changes after mount (client-side nav between project URLs)
+  // re-sync the modal so the user sees the new project without a full reload.
+  useEffect(() => {
+    if (!initialSlug) return
+    const next = [...personalProjects, ...clientProjects].find(
+      (p) => slugifyProject(p.title) === initialSlug,
+    )
+    if (next) {
+      setSelected(next)
+      setTab(clientProjects.includes(next) ? "client" : "personal")
+    }
+  }, [initialSlug, personalProjects, clientProjects])
 
   return (
     <>

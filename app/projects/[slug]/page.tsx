@@ -1,11 +1,13 @@
 /**
- * /projects/[slug] — project detail page with full case study.
- * Statically generated at build time from config/projects.ts.
+ * /projects/[slug] — boots the macOS desktop with the Projects window open
+ * and the matching project's modal pre-selected. SEO crawlers see a fully
+ * server-rendered case study (visually hidden via .sr-only) plus JSON-LD,
+ * so Google indexes the content while real users get the full UI.
  */
-import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, ArrowUpRight } from "lucide-react"
 import type { Metadata } from "next"
+import Desktop from "@/app/components/Desktop"
+import { getAllPosts } from "@/lib/posts"
 import { getAllProjects, getProjectBySlug } from "@/lib/project-lookup"
 import { siteConfig } from "@/config/siteConfig"
 import { SITE_URL } from "@/lib/site-url"
@@ -57,7 +59,9 @@ export default async function ProjectPage({
   const project = getProjectBySlug(slug)
   if (!project) notFound()
 
+  const posts = getAllPosts()
   const url = `${SITE_URL}/projects/${slug}`
+
   const creativeWorkSchema = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
@@ -70,9 +74,7 @@ export default async function ProjectPage({
     author: { "@id": `${SITE_URL}/#person` },
     creator: { "@id": `${SITE_URL}/#person` },
     inLanguage: "en-US",
-    ...(project.caseStudy?.outcome && {
-      abstract: project.caseStudy.outcome,
-    }),
+    ...(project.caseStudy?.outcome && { abstract: project.caseStudy.outcome }),
   }
 
   const breadcrumbSchema = {
@@ -86,7 +88,7 @@ export default async function ProjectPage({
   }
 
   return (
-    <main className="desktop-bg min-h-screen py-16 px-6">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(creativeWorkSchema) }}
@@ -96,97 +98,39 @@ export default async function ProjectPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      <article className="max-w-2xl mx-auto">
-        <Link
-          href="/projects"
-          className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest mb-10 hover:text-white transition-colors"
-          style={{ color: "var(--text-muted)" }}
-        >
-          <ArrowLeft size={11} /> All projects
-        </Link>
-
-        <header className="mb-10">
-          <p
-            className="font-mono text-[10px] uppercase tracking-[0.14em] mb-2"
-            style={{ color: "var(--text-muted)" }}
-          >
-            {project.category} project
-            {project.status ? ` · ${project.status}` : ""}
-          </p>
-          <h1 className="text-[28px] font-semibold text-white leading-tight mb-3">
-            {project.title}
-          </h1>
-          <p className="text-[14px] leading-relaxed mb-4" style={{ color: "var(--text-secondary)" }}>
-            {project.description}
-          </p>
-
-          <div className="flex flex-wrap gap-1.5 mb-4">
-            {project.tech.map((tag) => (
-              <span
-                key={tag}
-                className="font-mono text-[9px] uppercase tracking-[0.08em] px-1.5 py-0.5 rounded"
-                style={{
-                  color: "var(--text-muted)",
-                  border: "1px solid var(--widget-border)",
-                }}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <a
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-widest text-white/80 hover:text-white transition-colors"
-          >
-            Visit project <ArrowUpRight size={11} />
-          </a>
-        </header>
-
+      {/* Server-rendered SEO content. Visually hidden via .sr-only — present
+          in the HTML for Googlebot and assistive tech, invisible to users
+          who get the full macOS desktop UI below. */}
+      <article className="sr-only" aria-hidden="false">
+        <h1>{project.title}</h1>
+        <p>{project.description}</p>
+        <p>
+          By {siteConfig.personal.fullName}, {siteConfig.personal.role}
+          {siteConfig.personal.location ? `, ${siteConfig.personal.location}` : ""}.
+        </p>
+        <p>Tech stack: {project.tech.join(", ")}.</p>
         {project.caseStudy && (
-          <div className="prose-mdx space-y-8">
+          <>
             {project.caseStudy.metric && (
-              <div
-                className="rounded-lg p-6"
-                style={{ border: "1px solid var(--widget-border)" }}
-              >
-                <p
-                  className="font-mono text-[9px] uppercase tracking-[0.14em] mb-1"
-                  style={{ color: "var(--text-muted)" }}
-                >
-                  {project.caseStudy.metric.label}
-                </p>
-                <p className="text-[28px] font-semibold text-white">
-                  {project.caseStudy.metric.value}
-                </p>
-              </div>
+              <p>
+                <strong>{project.caseStudy.metric.label}:</strong>{" "}
+                {project.caseStudy.metric.value}
+              </p>
             )}
-
-            <section>
-              <h2 className="text-[16px] font-semibold text-white/90 mb-2">Problem</h2>
-              <p className="text-[14px] leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                {project.caseStudy.problem}
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-[16px] font-semibold text-white/90 mb-2">Approach</h2>
-              <p className="text-[14px] leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                {project.caseStudy.approach}
-              </p>
-            </section>
-
-            <section>
-              <h2 className="text-[16px] font-semibold text-white/90 mb-2">Outcome</h2>
-              <p className="text-[14px] leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                {project.caseStudy.outcome}
-              </p>
-            </section>
-          </div>
+            <h2>Problem</h2>
+            <p>{project.caseStudy.problem}</p>
+            <h2>Approach</h2>
+            <p>{project.caseStudy.approach}</p>
+            <h2>Outcome</h2>
+            <p>{project.caseStudy.outcome}</p>
+          </>
         )}
+        <p>
+          Live link: <a href={project.link}>{project.link}</a>
+        </p>
       </article>
-    </main>
+
+      <Desktop posts={posts} deeplink={{ window: "projects", slug }} />
+    </>
   )
 }
