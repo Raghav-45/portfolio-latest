@@ -109,9 +109,12 @@ function getAge(dob: Date): number {
 export const siteConfig: SiteConfig = {
   personal: {
     firstName: "Aditya",
-    lastName: "",
-    fullName: "Aditya",
-    alternateName: "Aditya Singh Khichi",
+    lastName: "Singh Khichi",
+    fullName: "Aditya Singh Khichi",
+    /** The casual short form people search for / link to. The primary
+     *  `fullName` is the legal name that needs to win SERP for the
+     *  full query "aditya singh khichi". */
+    alternateName: "Aditya",
     initials: "AD",
     role: "Full Stack Engineer",
     shortRole: "Full-Stack Software Engineer",
@@ -148,8 +151,8 @@ export const siteConfig: SiteConfig = {
   },
 
   seo: {
-    title: "Aditya — Full Stack Engineer",
-    description: "Full Stack Engineer building data platforms and AI systems at a YC W26 startup. Portfolio showcasing production-grade pipelines, RAG engines, and open-source contributions.",
+    title: "Aditya Singh Khichi — Full Stack Engineer",
+    description: "Aditya Singh Khichi is a Full Stack Engineer building data platforms and AI systems at a YC W26 startup. Portfolio showcasing production-grade pipelines, RAG engines, and open-source contributions.",
   },
 
   resumeLink: "https://drive.google.com/file/d/17s590R5N7Lh6oCtramv1_RdIkUGxQ87S/view",

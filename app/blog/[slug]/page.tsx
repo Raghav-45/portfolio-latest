@@ -136,8 +136,22 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             ))}
           </div>
           <h1 className="text-[28px] font-semibold text-white leading-tight mb-2">{post.title}</h1>
-          <p className="text-[14px]" style={{ color: "var(--text-secondary)" }}>
+          <p className="text-[14px] mb-3" style={{ color: "var(--text-secondary)" }}>
             {post.description}
+          </p>
+          <p
+            className="font-mono text-[10px] uppercase tracking-[0.14em]"
+            style={{ color: "var(--text-muted)" }}
+          >
+            By{" "}
+            <a
+              href={SITE_URL}
+              rel="author"
+              className="hover:text-white transition-colors"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              {siteConfig.personal.fullName}
+            </a>
           </p>
         </header>
 
