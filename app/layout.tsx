@@ -72,6 +72,7 @@ const personSchema = {
   "@id": `${SITE_URL}/#person`,
   name: siteConfig.personal.fullName,
   givenName: siteConfig.personal.firstName,
+  familyName: siteConfig.personal.lastName,
   alternateName: [
     ...(siteConfig.personal.alternateName ? [siteConfig.personal.alternateName] : []),
     siteConfig.personal.username,
