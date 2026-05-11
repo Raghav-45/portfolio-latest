@@ -1,4 +1,6 @@
 import type { NextConfig } from "next";
+import { siteConfig } from "@/config/siteConfig";
+import { SITE_URL } from "@/lib/site-url";
 
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
@@ -14,6 +16,9 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
+  // Explicit — prevents 308 redirects for trailing-slash URLs that
+  // Google Search Console flags as "Page with redirect".
+  trailingSlash: false,
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
@@ -29,6 +34,8 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  output: "standalone",
+  metadataBase: new URL(SITE_URL),
 };
 
 export default nextConfig;
