@@ -92,11 +92,11 @@ export interface SiteConfig {
 
 // ── Single source of truth — edit these, everything else derives. ───
 
-const DOB            = new Date("14 Feb 2005")
-const EMAIL          = "realraghavaditya@gmail.com"
-const GITHUB         = "raghav-45"
-const TWITTER        = "adityaxraghav"
-const CAL            = "adityaraghav"
+const DOB = new Date("14 Feb 2005")
+const EMAIL = "realraghavaditya@gmail.com"
+const GITHUB = "raghav-45"
+const TWITTER = "adityaxraghav"
+const CAL = "adityaraghav"
 
 function getAge(dob: Date): number {
   const today = new Date()
@@ -141,18 +141,30 @@ export const siteConfig: SiteConfig = {
     email: EMAIL,
     calendar: `https://cal.com/${CAL}`,
     heading: "Let's Connect",
-    subheading: "Open to collaborations, interesting projects, or just a conversation about engineering.",
+    subheading:
+      "Open to collaborations, interesting projects, or just a conversation about engineering.",
     rows: [
-      { icon: "mail",     href: `mailto:${EMAIL}`,                label: "Email",           mono: EMAIL },
-      { icon: "calendar", href: `https://cal.com/${CAL}`,          label: "Schedule a call", mono: `cal.com/${CAL}` },
-      { icon: "twitter",  href: `https://x.com/${TWITTER}`,        label: "X / Twitter",     mono: `@${TWITTER}` },
-      { icon: "github",   href: `https://github.com/${GITHUB}`,    label: "GitHub",          mono: GITHUB },
+      { icon: "mail", href: `mailto:${EMAIL}`, label: "Email", mono: EMAIL },
+      {
+        icon: "calendar",
+        href: `https://cal.com/${CAL}`,
+        label: "Schedule a call",
+        mono: `cal.com/${CAL}`,
+      },
+      {
+        icon: "twitter",
+        href: `https://x.com/${TWITTER}`,
+        label: "X / Twitter",
+        mono: `@${TWITTER}`,
+      },
+      { icon: "github", href: `https://github.com/${GITHUB}`, label: "GitHub", mono: GITHUB },
     ],
   },
 
   seo: {
     title: "Aditya Singh Khichi — Full Stack Engineer",
-    description: "Aditya Singh Khichi is a Full Stack Engineer building data platforms and AI systems at a YC W26 startup. Portfolio showcasing production-grade pipelines, RAG engines, and open-source contributions.",
+    description:
+      "Portfolio of Aditya Singh Khichi, a Full Stack Engineer building data platforms and AI systems (React, Node, Go, AWS). View case studies, including Conqr AI, Human Archive and Thunder Forms.",
   },
 
   resumeLink: "https://drive.google.com/file/d/17s590R5N7Lh6oCtramv1_RdIkUGxQ87S/view",

@@ -44,8 +44,9 @@ export default function Home() {
         <ul>
           {projects.map((p) => (
             <li key={p.slug}>
-              <Link href={`/projects/${p.slug}`}>{p.title}</Link> — {p.description}
-              {p.tech.length > 0 && <span>. Tech: {p.tech.join(', ')}.</span>}
+              <Link href={`/projects/${p.slug}`} title={`${p.title} Case Study`}>{p.title}</Link> — {p.description}
+              {p.caseStudy?.problem && <span> {p.caseStudy.problem}</span>}
+              {p.tech.length > 0 && <span> Tech Stack: {p.tech.join(', ')}.</span>}
             </li>
           ))}
         </ul>
