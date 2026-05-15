@@ -196,7 +196,7 @@ export const projects: ProjectsConfig = {
   client: [
     {
       title: "Human Archive Data Platform",
-      description: "Enterprise data platform for delivering TB-scale robotics datasets with multi-tenant auth and deep AWS integration.",
+      description: "Built Human Archive's (YC W26) enterprise data platform — TB-scale robotics dataset delivery with Cognito multi-tenant auth, S3 signed URLs, and recursive folder resolution across AWS.",
       tech: ["React", "TanStack Router", "Express", "PostgreSQL", "AWS"],
       link: "https://humanarchive.ai",
       caseStudy: {
