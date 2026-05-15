@@ -23,8 +23,29 @@ export const metadata: Metadata = {
 export default function ExperiencePage() {
   const posts = getAllPosts()
 
+  const itemListElement = experience.map((role, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@type": "Organization",
+      name: role.company,
+      ...(role.links && role.links.length > 0 ? { url: role.links[0].url } : {}),
+      description: `${role.role} — ${role.description}`,
+    }
+  }))
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement,
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       <article className="sr-only" aria-hidden="false">
         <h1>{siteConfig.personal.fullName} — Experience</h1>
         <p>

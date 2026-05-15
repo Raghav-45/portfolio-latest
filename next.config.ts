@@ -35,7 +35,6 @@ const nextConfig: NextConfig = {
     ];
   },
   output: "standalone",
-  metadataBase: new URL(SITE_URL),
 };
 
 export default nextConfig;
