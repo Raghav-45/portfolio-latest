@@ -1,0 +1,304 @@
+%-------------------------
+% Resume in Latex
+% Author : Abey George
+% Based off of: https://github.com/sb2nov/resume
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\usepackage{graphicx}
+\setlength{\multicolsep}{-3.0pt}
+\setlength{\columnsep}{-1pt}
+\input{glyphtounicode}
+
+\RequirePackage{tikz}
+\RequirePackage{xcolor}
+\RequirePackage{fontawesome}
+\usepackage{tikz}
+\usetikzlibrary{svg.path}
+
+%----------Y COMBINATOR DESIGN----------
+\definecolor{ycorange}{HTML}{FF6600}
+\newcommand{\yclogo}{%
+  \raisebox{9.5pt}{%
+    \scalebox{1}[-1]{%
+      \resizebox{!}{12pt}{%
+        \begin{tikzpicture}[y=1pt, x=1pt]
+          \fill[ycorange] svg{M47.9985 47.9994H0V0H47.9985V47.9994Z};
+          \fill[white] svg{M13.9012 11.7843H17.6595L22.4961 21.5325C23.203 22.9836 23.7984 24.3976 23.7984 24.3976C23.7984 24.3976 24.4313 23.021 25.175 21.5325L30.0868 11.7843H33.5843L25.2865 27.3746V37.309H22.1244V27.1884L13.9012 11.7843Z};
+        \end{tikzpicture}%
+      }%
+    }%
+  }%
+}
+%----------Y COMBINATOR DESIGN----------
+
+\definecolor{cvblue}{HTML}{0E5484}
+\definecolor{black}{HTML}{130810}
+\definecolor{darkcolor}{HTML}{0F4539}
+\definecolor{cvgreen}{HTML}{3BD80D}
+\definecolor{taggreen}{HTML}{00E278}
+\definecolor{SlateGrey}{HTML}{2E2E2E}
+\definecolor{LightGrey}{HTML}{666666}
+\colorlet{name}{black}
+\colorlet{tagline}{darkcolor}
+\colorlet{heading}{darkcolor}
+\colorlet{headingrule}{cvblue}
+\colorlet{accent}{darkcolor}
+\colorlet{emphasis}{SlateGrey}
+\colorlet{body}{LightGrey}
+
+
+
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% \usepackage[default]{sourcesanspro}
+
+% serif
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+
+
+% \pagestyle{fancy}
+% \fancyhf{} % clear all header and footer fields
+% \fancyfoot{}
+% \renewcommand{\headrulewidth}{0pt}
+% \renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1.19in}
+\addtolength{\topmargin}{-.7in}
+\addtolength{\textheight}{1.4in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{0pt}}
+  }
+}
+
+\newcommand{\classesList}[4]{
+    \item\small{
+        {#1 #2 #3 #4 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{\large#1} & \textbf{\small #2} \\
+      \textit{\large#3} & \textit{\small #4} \\
+      
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{1.001\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \textbf{\small #2}\\
+    \end{tabular*}\vspace{-10pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\newcommand{\resumeProject}[2]{
+    \item
+    \begin{tabular*}{0.001\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \textbf{\small #2}\\
+    \end{tabular*}\vspace{-6pt}
+}
+
+
+\newcommand\sbullet[1][.5]{\mathbin{\vcenter{\hbox{\scalebox{#1}{$\bullet$}}}}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+	{\Huge \scshape Aditya} \\ \vspace{1pt}
+	New Delhi, India \\ \vspace{1pt}
+	\small \href{tel:+91 7042594978}{\raisebox{-0.1\height}\faPhone\ \underline{+91 7042594978}} ~
+	\href{mailto:realraghavaditya@gmail.com}{\raisebox{-0.2\height}\faEnvelope\  \underline{realraghavaditya@gmail.com}} ~ 
+	\href{https://www.linkedin.com/in/aditya-singh-khichi/}{\raisebox{-0.2\height}\faLinkedinSquare\ \underline{LinkedIn}} ~
+	\href{https://github.com/raghav-45}{\raisebox{-0.2\height}\faGithub\ \underline{GitHub}} ~
+	\href{https://aditya.is-a.dev/}{\raisebox{-0.2\height}\faGlobe\ \underline{Portfolio}}
+	\vspace{-8pt}
+\end{center}
+
+
+%-----------EDUCATION-----------
+\section{EDUCATION}
+\resumeSubHeadingListStart
+\resumeSubheading
+{Maharaja Agrasen Institute of Technology}{2024-2028}
+{Bachelor of Technology in Information Technology and Engineering}{New Delhi, India}
+\resumeSubHeadingListEnd
+
+%-----------EXPERIENCE-----------
+\section{PROFESSIONAL EXPERIENCE}
+\resumeSubHeadingListStart
+
+\resumeSubheading
+{Bajaj Finserv Health Ltd. (BFHL)}{June 2026 - Sept 2026}
+{Software Engineering Intern}{Pune, India}
+\resumeItemListStart
+    \resumeItem{Built a production-grade \textbf{Dynamic Form Builder} for healthcare investigation workflows -- introducing a schema-driven \textbf{Pages $\rightarrow$ Sections $\rightarrow$ Fields} architecture with version control, real-time production previews.}
+    \resumeItem{Reduced a \textbf{4-person, 3-week} form build-and-publish cycle to \textbf{under a day}, engineering field-level \textbf{Zod validation}, \textbf{SFDC prefill}, and \textbf{immutable versioning} to let non-technical teams ship configurable, traceable investigation forms across \textbf{multiple tenants} without code changes.}
+    \resumeItem{Worked in an \textbf{Agile} engineering environment participating in \textbf{Scrums, Sprint Planning, Grooming, and Team Reviews}, while gaining hands-on exposure to \textbf{Azure DevOps}-based project management and \textbf{ArgoCD}-based CI/CD deployments.}
+\resumeItemListEnd
+
+\resumeSubheading
+{Human Archive (YC W26) \yclogo\ \  }{Feb 2026 - June 2026}
+{Software Engineering Intern}{San Francisco, CA (Remote)}
+\resumeItemListStart
+    \resumeItem{Led a team of engineers to build the company's data platform end-to-end: \textbf{React} with \textbf{TanStack Router}, \textbf{Express} API, \textbf{PostgreSQL}, and deep \textbf{AWS integration} (Cognito, S3, Lambda, CloudFront signed URLs), serving as the primary tool for delivering TB-scale robotics datasets to enterprise customers.}
+    \resumeItem{Designed the dataset pipeline (recursive \textbf{S3 folder resolution}, \textbf{batched ingestion} with conflict-safe upserts) and a \textbf{multi-tenant auth layer} with \textbf{Cognito JWT} verification, \textbf{Postgres-enriched} role/org profiles, and role-gated UI branching entire component subtrees per user type.}
+\resumeItemListEnd
+
+\resumeSubheading
+{Conqr AI}{May 2025 - Jan 2026}
+{Full stack Engineer}{London (Remote)}
+\resumeItemListStart
+    \resumeItem{Built a Legal Chatbot using \textbf{RAG}, leveraging \textbf{PDF.js} and \textbf{page-wise chunking} to maintain context across sections.}
+    \resumeItem{Engineered an end-to-end document pipeline: scan detection, \textbf{OCR} on demand, chunking, and metadata-backed storage; Optimised data ingestion timeline from more than 5 minutes to less than a minute for around 25 documents using \textbf{Go's concurrency model} for parallel processing tasks.}
+\resumeItemListEnd
+
+%-----------PROJECTS-----------
+\section{PROJECTS}
+\resumeSubHeadingListStart
+\resumeProject
+{
+	\textbf{Fantastic Robo}
+	\href{https://github.com/HackRx-6/Squirtle-Squad}{\faGithub} $|$ \small{\textit{Docker, Sentry, Vector Embeddings, Mistral OCR, CI/CD, DigitalOcean} }
+}{}
+    \resumeItemListStart
+        \resumeItem {Built a high-throughput, \textbf{multi-format ingestion pipeline} supporting PDFs, DOCX, PPTX, XLSX, images and emails with adaptive extraction, \textbf{OCR}, \textbf{semantic chunking}, and embedding batching to maximize RAG recall. }
+        \resumeItem {Implemented a \textbf{scalable vector search} layer that balances \textbf{HNSW} based similarity matching with \textbf{dynamic Top-K} and \textbf{Hybrid} retrieval and real-time question embeddings under constrained timeouts.}
+        \resumeItem{Designed a production-grade \textbf{LLM load balancer} with smart request routing, racing/cost-effective modes, and telemetry feedback to support resilient RAG service levels.}
+    \resumeItemListEnd
+\resumeSubHeadingListEnd
+
+
+%-----------ACHIEVEMENTS-----------
+\section{ACHIEVEMENTS}
+\begin{itemize}[leftmargin=0.15in, label={}]
+	\small{\item{
+		{\textbf{3rd Runner Up @ Bajaj HackRX 6.0:} Awarded Larry Page Award for Best Innovation \hfill Bangalore, India \\
+			{\textbf{Top 25 @ Facebook: Pragati AI for Impact Hackathon}} \hfill Bangalore, India \\
+		}} 
+	}
+\end{itemize}
+
+
+%-----------SKILLS-----------
+\section{TECHNICAL SKILLS}
+\begin{itemize}[leftmargin=0.15in, label={}]
+	\small{\item{
+		\textbf{Languages:} Go (Golang), JavaScript, TypeScript, Python, Java, C \\
+		\textbf{Backend:} Node.js, Express, Bun, FastAPI, WebSockets, GraphQL, WebSockets Langchain \\
+		\textbf{Generative AI:} MCP, Agents, RAG models, Vector DBs, LangGraph,\\
+		\textbf{Frontend:} React.js, Next.js, TanStack Query, Zustand, Redux, Framer Motion \\
+		\textbf{Databases:} PostgreSQL, MongoDB, Redis, Cassandra, Prisma, Drizzle, TypeORM \\
+		\textbf{Other:} data structures, algorithms, Puppeteer Chrome Extensions, Web Scraping, Discord Bots, Telegram Bots \\
+	}}
+\end{itemize}
+
+
+% niche ka commented out hai, for latex reference
+\iffalse
+\resumeSubHeadingListStart
+\resumeSubheading
+{RelevAInce}{April 2025 - Present}
+{Full stack Engineer}{Dallas, Remote}
+\resumeItemListStart
+\resumeItem{
+	Redesigned the complete user interface in TypeScript with strict type safety, rewriting critical interfaces with a modern, minimalistic design. 
+}
+\resumeItem{
+	Increased \textbf{automated test coverage} from \textbf{20\% to 86\%} across the entire codebase, significantly improving system reliability. Implemented end-to-end \textbf{analytics and observability using Mixpanel and Grafana}.
+}
+\resumeItem{
+	Developed an \textbf{AI-powered sensitive information redaction tool}, enabling automated detection and secure redaction of confidential legal data, currently used by law firms in dallas and generating over \textbf{\$2,000+ in MRR}.
+}
+\resumeItem{
+	Currently working on a \textbf{large scale contract analyst} , which could mimic the workflow of an actual lawyer using agentic tools and is intended to help law firms \textbf{reduce manual review time by 85\%-90\%}
+}
+\resumeItemListEnd
+\resumeSubheading
+{Conqr AI}{May 2024 - April 2025}
+{Full stack Engineer}{London, Remote}
+\resumeItemListStart
+\resumeItem{Developed \textbf{Conqr Connect}, an AI-powered feature using \textbf{AWS SES}, \textbf{Lambda}, and \textbf{S3} to automate email thread capturing and context understanding, enabling contract review, summarization, and drafting directly from email conversations, significantly enhancing workflow efficiency.}
+\resumeItem{Built a comprehensive document review and analysis tool leveraging \textbf{vector embeddings and vector similarity search} for reviewing documents against large legal rulebooks, providing deep insights and accelerating legal research.}
+\resumeItem{Optimised data ingestion timeline from more than 5 minutes to less than a minute for around 25 documents using \textbf{Go's concurrency model} for parallel processing tasks.}
+\resumeItem{Developed an \textbf{AI-powered live document editor} (Co-Pilot for Document), enabling \textbf{40\% faster contract drafting} and \textbf{50\% fewer conflicts} in legal documents.}
+       
+\resumeItemListEnd
+ 
+\resumeSubheading
+{YouOceans}{}
+{Backend Developer}{}
+\resumeItemListStart
+\resumeItem{Built a \textbf{fully serverless backend} using Node.js, set up \textbf{CI/CD with GitHub Actions} to containerize the app via ECR and auto-deploy it to AWS Lambda behind API Gateway, allowing cost-efficient, \textbf{scalable API hosting}.}
+\resumeItem{Developed an intelligent \textbf{audio processing pipeline} in Python from openly available Hydrophones S3 buckets, ran a \textbf{whale-call detection ML model}, and stored the analysis in PostgreSQL (RDS).}
+\resumeItem{Built an on-demand data generation system using a \textbf{Redis-backed job queue}, reducing data unavailability by 95\% and ensuring real-time freshness for large-scale client requests.}
+\resumeItemListEnd
+  
+\resumeSubHeadingListEnd
+\fi
+
+
+\end{document}
