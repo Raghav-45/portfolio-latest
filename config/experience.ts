@@ -119,6 +119,7 @@ export const resumeExperience: ResumeExperienceItem[] = [
     company: "Spacedrive",
     role: "Open Source Contributor",
     period: "Aug 2023 - May 2025",
+    location: "Vancouver, Canada (Remote)",
     bullets: [
       "Implemented 9 key features, including Copy File Path, displaying full file paths in the Inspector, Quick Preview for text files, and extended Quick Preview support with additional file types and image zooming.",
     ],
