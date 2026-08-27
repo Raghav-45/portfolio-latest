@@ -84,6 +84,16 @@ export interface ResumeExperienceItem {
 
 export const resumeExperience: ResumeExperienceItem[] = [
   {
+    company: "Bajaj Finserv Health Ltd.",
+    role: "Software Engineering Intern",
+    period: "UPDATE: start - end", // update with real dates
+    bullets: [
+      "Built a production-grade Dynamic Form Builder for healthcare investigation workflows — introducing a schema-driven Pages → Sections → Fields architecture with backward-compatible migration, live production previews, and AI-assisted form generation. Replaced a manual 3-week, 4-person build-and-publish process with a 1-day turnaround.",
+      "Engineered cross-page drag-and-drop composition, field-level Zod validation, SFDC prefill support, and immutable form versioning, letting non-technical squads ship configurable, traceable investigation forms across multiple tenants with no code changes.",
+      "Recognized by the CTO as a high-impact engineer on the form-building workflow; operated in an Agile environment (Scrums, Sprint Planning, Grooming, Reviews) using Azure DevOps and ArgoCD-based CI/CD.",
+    ],
+  },
+  {
     company: "Human Archive (YC W26)",
     role: "Full Stack Engineer",
     period: "Feb 2026 - Present",

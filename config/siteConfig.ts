@@ -167,7 +167,7 @@ export const siteConfig: SiteConfig = {
       "Portfolio of Aditya Singh Khichi, a Full Stack Engineer building data platforms and AI systems (React, Node, Go, AWS). View case studies, including Conqr AI, Human Archive and Thunder Forms.",
   },
 
-  resumeLink: "https://drive.google.com/file/d/17s590R5N7Lh6oCtramv1_RdIkUGxQ87S/view",
+  resumeLink: "https://drive.google.com/file/d/1qReRsIdeCif8HlzPmSMH_J1sPbVYd5GH/view",
 
   features: {
     konami: false,
