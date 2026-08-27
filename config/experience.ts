@@ -77,6 +77,7 @@ export interface ResumeExperienceItem {
   company: string
   role: string
   period: string
+  location?: string
   /** Optional list of sub-companies (e.g. for a contractor umbrella). */
   subRoles?: string[]
   bullets: string[]
@@ -84,9 +85,10 @@ export interface ResumeExperienceItem {
 
 export const resumeExperience: ResumeExperienceItem[] = [
   {
-    company: "Bajaj Finserv Health Ltd.",
+    company: "Bajaj Finserv Health Ltd. (BFHL)",
     role: "Software Engineering Intern",
     period: "June 2026 - Sept 2026",
+    location: "Pune, India",
     bullets: [
       "Built a production-grade Dynamic Form Builder for healthcare investigation workflows — introducing a schema-driven Pages → Sections → Fields architecture with backward-compatible migration, live production previews, and AI-assisted form generation. Replaced a manual 3-week, 4-person build-and-publish process with a 1-day turnaround.",
       "Engineered cross-page drag-and-drop composition, field-level Zod validation, SFDC prefill support, and immutable form versioning, letting non-technical squads ship configurable, traceable investigation forms across multiple tenants with no code changes.",
@@ -95,8 +97,9 @@ export const resumeExperience: ResumeExperienceItem[] = [
   },
   {
     company: "Human Archive (YC W26)",
-    role: "Full Stack Engineer",
-    period: "Feb 2026 - Present",
+    role: "Software Engineering Intern",
+    period: "Feb 2026 - June 2026",
+    location: "San Francisco, CA (Remote)",
     bullets: [
       "Led a team of engineers to build the company's data platform end-to-end: React with TanStack Router, Express API, PostgreSQL, and deep AWS integration (Cognito, S3, Lambda, CloudFront signed URLs), serving as the primary tool for delivering TB-scale robotics datasets to enterprise customers.",
       "Designed the dataset pipeline (recursive S3 folder resolution, batched ingestion with conflict-safe upserts) and a multi-tenant auth layer with Cognito JWT verification, Postgres-enriched role/org profiles, and role-gated UI branching entire component subtrees per user type.",
@@ -106,6 +109,7 @@ export const resumeExperience: ResumeExperienceItem[] = [
     company: "Conqr AI",
     role: "Full Stack Engineer",
     period: "May 2025 - Jan 2026",
+    location: "London (Remote)",
     bullets: [
       "Built a Legal Chatbot using RAG, leveraging PDF.js and page-wise chunking to maintain context across sections.",
       "Engineered an end-to-end document pipeline: scan detection, OCR on demand, chunking, and metadata-backed storage; optimised data ingestion from 5+ minutes to under a minute for ~25 documents using Go's concurrency model.",
