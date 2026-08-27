@@ -86,26 +86,28 @@ export default function Resume({ compact = false }: { compact?: boolean }) {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.05 }}
               >
-                <div className="flex items-start justify-between gap-2 mb-1">
-                  <div>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-[13px] font-semibold text-white">{job.company}</span>
-                      <span className="text-[11px]" style={{ color: "var(--text-secondary)" }}>
-                        {job.role}
+                <div className="mb-1">
+                  <div className="flex items-baseline justify-between gap-2">
+                    <span className="text-[13px] font-semibold text-white">{job.company}</span>
+                    <span className="text-[11px] font-semibold flex-none" style={{ color: "var(--text-secondary)" }}>
+                      {job.period}
+                    </span>
+                  </div>
+                  <div className="flex items-baseline justify-between gap-2">
+                    <span className="text-[11px] italic" style={{ color: "var(--text-secondary)" }}>
+                      {job.role}
+                    </span>
+                    {job.location && (
+                      <span className="text-[10px] italic flex-none" style={{ color: "var(--text-muted)" }}>
+                        {job.location}
                       </span>
-                    </div>
-                    {job.subRoles && (
-                      <p className="text-[10px] mt-0.5" style={{ color: "var(--text-muted)" }}>
-                        via {job.subRoles.join(" · ")}
-                      </p>
                     )}
                   </div>
-                  <span
-                    className="text-[10px] flex-none mt-0.5"
-                    style={{ color: "var(--text-muted)" }}
-                  >
-                    {job.period}
-                  </span>
+                  {job.subRoles && (
+                    <p className="text-[10px] mt-0.5" style={{ color: "var(--text-muted)" }}>
+                      via {job.subRoles.join(" · ")}
+                    </p>
+                  )}
                 </div>
                 <ul className="space-y-1 pl-3">
                   {job.bullets.map((b, j) => (
