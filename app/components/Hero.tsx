@@ -41,7 +41,7 @@ export default function Hero({ compact = false }: { compact?: boolean }) {
             {/* Avatar — edit siteConfig.personal.avatar and drop your image into /public.
                 alt="" because the name is already rendered next to it (avoid double announcement).
                 priority because the avatar is above the fold on every viewport. */}
-            <Image src={personal.avatar} alt="" fill priority className="object-cover" />
+            <Image src={personal.avatar} alt="" fill priority sizes="32px" className="object-cover" />
           </div>
           <div>
             <p className="font-mono text-[10px] uppercase tracking-widest" style={{ color: "var(--text-secondary)" }}>
