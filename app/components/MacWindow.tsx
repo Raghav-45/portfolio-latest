@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useId, useRef } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 import { motion, AnimatePresence, useDragControls } from "framer-motion"
 
 interface MacWindowProps {
@@ -38,6 +38,8 @@ export default function MacWindow({
 }: MacWindowProps) {
   const dragControls = useDragControls()
   const dialogRef = useRef<HTMLDivElement>(null)
+  const [hoveredBtn, setHoveredBtn] = useState<"close" | "minimize" | "maximize" | null>(null)
+  const [activeBtn, setActiveBtn] = useState<"close" | "minimize" | "maximize" | null>(null)
   const reactId = useId()
   const titleId = `window-title-${windowId ?? reactId}`
 
@@ -137,38 +139,72 @@ export default function MacWindow({
               }}
               onPointerDown={(e) => dragControls.start(e)}
             >
-              {/* Close button — yellow/green are decorative (aria-hidden). */}
+              {/* Traffic light buttons — real macOS SVG paths */}
               <div className="flex items-center gap-[7px] z-10">
+                {/* Close */}
                 <button
                   type="button"
                   aria-label={`Close ${title}`}
-                  className="w-3 h-3 rounded-full flex-none focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--titlebar-bg)]"
+                  className="w-3 h-3 rounded-full flex items-center justify-center flex-none p-0 border-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--titlebar-bg)]"
                   style={{
-                    background: isFocused ? "#ff5f57" : "rgba(255,255,255,0.12)",
-                    boxShadow: isFocused ? "inset 0 -0.5px 1px rgba(0,0,0,0.2), 0 0.5px 1px rgba(255,255,255,0.06)" : "none",
-                    transition: "background 0.15s, box-shadow 0.15s",
+                    background: !isFocused ? "#4E4F52"
+                      : activeBtn === "close" ? "#F09389"
+                      : "#EC6A5E",
+                    transition: "background 0.1s",
                   }}
                   onClick={(e) => { e.stopPropagation(); onClose() }}
-                  onPointerDown={(e) => e.stopPropagation()}
-                />
+                  onPointerDown={(e) => { e.stopPropagation(); setActiveBtn("close") }}
+                  onPointerUp={() => setActiveBtn(null)}
+                  onPointerLeave={() => { setActiveBtn(null); setHoveredBtn(null) }}
+                  onPointerEnter={() => setHoveredBtn("close")}
+                >
+                  {isFocused && (
+                    <svg width="86" height="86" viewBox="0 0 85.4 85.4" fill="none" aria-hidden="true" style={{ width: "100%", height: "100%" }}>
+                      <path fillRule="evenodd" clipRule="evenodd" d="M22.5 57.8L57.8 22.5C59.2 21.1 61.4 21.1 62.8 22.5L62.9 22.6C64.3 24 64.3 26.2 62.9 27.6L27.6 62.9C26.2 64.3 24 64.3 22.6 62.9L22.5 62.8C21.2 61.4 21.2 59.2 22.5 57.8Z" fill={hoveredBtn === "close" || activeBtn === "close" ? "#8B1A0F" : "rgba(0,0,0,0.35)"} />
+                      <path fillRule="evenodd" clipRule="evenodd" d="M27.6 22.5L62.9 57.8C64.3 59.2 64.3 61.4 62.9 62.8L62.8 62.9C61.4 64.3 59.2 64.3 57.8 62.9L22.5 27.6C21.1 26.2 21.1 24 22.5 22.6L22.6 22.5C24 21.2 26.2 21.2 27.6 22.5Z" fill={hoveredBtn === "close" || activeBtn === "close" ? "#8B1A0F" : "rgba(0,0,0,0.35)"} />
+                    </svg>
+                  )}
+                </button>
+
+                {/* Minimize */}
                 <span
                   aria-hidden="true"
-                  className="w-3 h-3 rounded-full"
+                  className="w-3 h-3 rounded-full flex items-center justify-center"
                   style={{
-                    background: isFocused ? "#febd2e" : "rgba(255,255,255,0.08)",
-                    boxShadow: isFocused ? "inset 0 -0.5px 1px rgba(0,0,0,0.2), 0 0.5px 1px rgba(255,255,255,0.06)" : "none",
-                    transition: "background 0.15s, box-shadow 0.15s",
+                    background: !isFocused ? "#4E4F52"
+                      : activeBtn === "minimize" ? "#FBEB74"
+                      : "#F4BF4F",
+                    transition: "background 0.1s",
                   }}
-                />
+                  onPointerEnter={() => setHoveredBtn("minimize")}
+                  onPointerLeave={() => setHoveredBtn(null)}
+                >
+                  {isFocused && (
+                    <svg width="86" height="86" viewBox="0 0 85.4 85.4" fill="none" aria-hidden="true" style={{ width: "100%", height: "100%" }}>
+                      <path fillRule="evenodd" clipRule="evenodd" d="M17.8 39.1H67.7C69.6 39.1 71.2 40.7 71.2 42.6V42.7C71.2 44.6 69.6 46.2 67.7 46.2H17.8C15.9 46.2 14.3 44.6 14.3 42.7V42.6C14.3 40.7 15.8 39.1 17.8 39.1Z" fill={hoveredBtn === "minimize" ? "#A87229" : "rgba(0,0,0,0.35)"} />
+                    </svg>
+                  )}
+                </span>
+
+                {/* Maximize */}
                 <span
                   aria-hidden="true"
-                  className="w-3 h-3 rounded-full"
+                  className="w-3 h-3 rounded-full flex items-center justify-center"
                   style={{
-                    background: isFocused ? "#27c93f" : "rgba(255,255,255,0.08)",
-                    boxShadow: isFocused ? "inset 0 -0.5px 1px rgba(0,0,0,0.2), 0 0.5px 1px rgba(255,255,255,0.06)" : "none",
-                    transition: "background 0.15s, box-shadow 0.15s",
+                    background: !isFocused ? "#4E4F52"
+                      : activeBtn === "maximize" ? "#86F37E"
+                      : "#62C554",
+                    transition: "background 0.1s",
                   }}
-                />
+                  onPointerEnter={() => setHoveredBtn("maximize")}
+                  onPointerLeave={() => setHoveredBtn(null)}
+                >
+                  {isFocused && (
+                    <svg width="86" height="86" viewBox="0 0 85.4 85.4" fill="none" aria-hidden="true" style={{ width: "100%", height: "100%" }}>
+                      <path fillRule="evenodd" clipRule="evenodd" d="M31.2 20.8H57.9C61.5 20.8 64.4 23.7 64.4 27.3V54L31.2 20.8ZM54.4 64.5H27.6C24 64.5 21.1 61.6 21.1 58V31.2L54.4 64.5Z" fill={hoveredBtn === "maximize" ? "#286017" : "rgba(0,0,0,0.35)"} />
+                    </svg>
+                  )}
+                </span>
               </div>
 
               {/* Title — rendered as h2 for correct heading semantics. */}
