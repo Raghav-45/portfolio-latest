@@ -106,40 +106,69 @@ export default function MacWindow({
             className="flex flex-col overflow-hidden"
             style={{
               height: `min(${height}px, calc(100vh - 72px))`,
-              borderRadius: 8,
+              borderRadius: 16,
               border: isFocused
-                ? "1px solid var(--window-border-focused)"
-                : "1px solid var(--window-border-unfocused)",
+                ? "1px solid var(--glass-border-strong)"
+                : "1px solid var(--glass-border)",
               boxShadow: isFocused
-                ? "0 40px 80px rgba(0,0,0,0.9), 0 0 0 0.5px rgba(0,0,0,1)"
-                : "0 16px 40px rgba(0,0,0,0.7), 0 0 0 0.5px rgba(0,0,0,1)",
-              transition: "box-shadow 0.2s ease, border-color 0.2s ease",
+                ? "0 32px 80px rgba(0,0,0,0.65), 0 0 0 0.5px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.05)"
+                : "0 16px 48px rgba(0,0,0,0.5), 0 0 0 0.5px rgba(255,255,255,0.03)",
+              backdropFilter: "blur(24px) saturate(1.4)",
+              WebkitBackdropFilter: "blur(24px) saturate(1.4)",
+              transition: "box-shadow 0.25s ease, border-color 0.25s ease",
             }}
           >
+            {/* Specular highlight — top edge gradient */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-x-0 top-0 h-px pointer-events-none"
+              style={{
+                background: "linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.08) 50%, transparent 90%)",
+                borderRadius: "16px 16px 0 0",
+              }}
+            />
+
             {/* Title Bar */}
             <div
-              className="flex-none flex items-center h-9 px-3 relative select-none cursor-grab active:cursor-grabbing"
+              className="flex-none flex items-center h-10 px-3.5 relative select-none cursor-grab active:cursor-grabbing"
               style={{
                 background: "var(--titlebar-bg)",
-                borderBottom: "1px solid var(--window-border-unfocused)",
+                borderBottom: "1px solid var(--glass-border)",
               }}
               onPointerDown={(e) => dragControls.start(e)}
             >
               {/* Close button — yellow/green are decorative (aria-hidden). */}
-              <div className="flex items-center gap-1.5 z-10">
+              <div className="flex items-center gap-[7px] z-10">
                 <button
                   type="button"
                   aria-label={`Close ${title}`}
-                  className="w-2.5 h-2.5 rounded-full flex-none focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--titlebar-bg)]"
+                  className="w-3 h-3 rounded-full flex-none focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--titlebar-bg)]"
                   style={{
                     background: isFocused ? "#ff5f57" : "rgba(255,255,255,0.12)",
-                    transition: "background 0.15s",
+                    boxShadow: isFocused ? "inset 0 -0.5px 1px rgba(0,0,0,0.2), 0 0.5px 1px rgba(255,255,255,0.06)" : "none",
+                    transition: "background 0.15s, box-shadow 0.15s",
                   }}
                   onClick={(e) => { e.stopPropagation(); onClose() }}
                   onPointerDown={(e) => e.stopPropagation()}
                 />
-                <span aria-hidden="true" className="w-2.5 h-2.5 rounded-full" style={{ background: "rgba(255,255,255,0.08)" }} />
-                <span aria-hidden="true" className="w-2.5 h-2.5 rounded-full" style={{ background: "rgba(255,255,255,0.08)" }} />
+                <span
+                  aria-hidden="true"
+                  className="w-3 h-3 rounded-full"
+                  style={{
+                    background: isFocused ? "#febd2e" : "rgba(255,255,255,0.08)",
+                    boxShadow: isFocused ? "inset 0 -0.5px 1px rgba(0,0,0,0.2), 0 0.5px 1px rgba(255,255,255,0.06)" : "none",
+                    transition: "background 0.15s, box-shadow 0.15s",
+                  }}
+                />
+                <span
+                  aria-hidden="true"
+                  className="w-3 h-3 rounded-full"
+                  style={{
+                    background: isFocused ? "#27c93f" : "rgba(255,255,255,0.08)",
+                    boxShadow: isFocused ? "inset 0 -0.5px 1px rgba(0,0,0,0.2), 0 0.5px 1px rgba(255,255,255,0.06)" : "none",
+                    transition: "background 0.15s, box-shadow 0.15s",
+                  }}
+                />
               </div>
 
               {/* Title — rendered as h2 for correct heading semantics. */}

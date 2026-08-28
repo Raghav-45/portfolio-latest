@@ -199,7 +199,7 @@ export default function Desktop({
             aria-modal="true"
             aria-labelledby="about-overlay-title"
             className="fixed inset-0 z-[600] flex items-center justify-center"
-            style={{ background: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)" }}
+            style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -212,10 +212,13 @@ export default function Desktop({
               transition={{ type: "spring", damping: 28, stiffness: 380 }}
               className="px-8 py-7 text-center"
               style={{
-                background: "#111",
-                border: "1px solid rgba(255,255,255,0.1)",
-                borderRadius: 12,
+                background: "var(--window-bg)",
+                border: "1px solid var(--glass-border-strong)",
+                borderRadius: 16,
                 width: 320,
+                backdropFilter: "blur(24px) saturate(1.4)",
+                WebkitBackdropFilter: "blur(24px) saturate(1.4)",
+                boxShadow: "0 32px 80px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.05)",
               }}
               onClick={(e) => e.stopPropagation()}
             >
@@ -226,7 +229,7 @@ export default function Desktop({
               <p className="font-mono text-[11px] mb-5" style={{ color: "rgba(255,255,255,0.35)" }}>Version 1.0.0</p>
               <div
                 className="text-left space-y-2 py-4 mb-5"
-                style={{ borderTop: "1px solid rgba(255,255,255,0.08)", borderBottom: "1px solid rgba(255,255,255,0.08)" }}
+                style={{ borderTop: "1px solid var(--glass-border)", borderBottom: "1px solid var(--glass-border)" }}
               >
                 {[
                   ["Runtime",    "Next.js 15 · React 19"],
@@ -244,8 +247,8 @@ export default function Desktop({
               </div>
               <button
                 type="button"
-                className="font-mono text-[10px] uppercase tracking-widest px-4 py-2 rounded transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-                style={{ background: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.5)", border: "1px solid rgba(255,255,255,0.08)" }}
+                className="font-mono text-[10px] uppercase tracking-widest px-4 py-2 rounded-xl transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70 glass-card-sm"
+                style={{ color: "rgba(255,255,255,0.5)" }}
                 onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.12)")}
                 onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.07)")}
                 onClick={() => setShowAboutOverlay(false)}
@@ -273,9 +276,12 @@ export default function Desktop({
               transition={{ type: "spring", damping: 20, stiffness: 300 }}
               className="text-center px-10 py-8"
               style={{
-                background: "#111",
-                border: "1px solid rgba(255,255,255,0.12)",
-                borderRadius: 12,
+                background: "var(--window-bg)",
+                border: "1px solid var(--glass-border-strong)",
+                borderRadius: 16,
+                backdropFilter: "blur(24px) saturate(1.4)",
+                WebkitBackdropFilter: "blur(24px) saturate(1.4)",
+                boxShadow: "0 32px 80px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.05)",
               }}
             >
               <p className="font-mono text-[11px] uppercase tracking-[0.2em] mb-3" style={{ color: "rgba(255,255,255,0.3)" }}>
