@@ -57,11 +57,13 @@ function DockIcon({
       <AnimatePresence>
         {hovered && (
           <motion.div
-            className="absolute bottom-full mb-2 px-2.5 py-1 rounded font-mono text-[10px] uppercase tracking-[0.06em] whitespace-nowrap pointer-events-none"
+            className="absolute bottom-full mb-2 px-2.5 py-1 rounded-lg font-mono text-[10px] uppercase tracking-[0.06em] whitespace-nowrap pointer-events-none"
             style={{
               background: "var(--tooltip-bg)",
-              border: "1px solid var(--widget-border)",
+              border: "1px solid var(--glass-border)",
               color: "var(--text-primary)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
             }}
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
@@ -81,11 +83,16 @@ function DockIcon({
         aria-pressed={item.kind === "window" ? isOpen : undefined}
         style={{ width: size, height: size }}
         animate={{
-          background: isOpen ? "rgba(255,255,255,0.1)" : hovered ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.05)",
+          background: isOpen ? "rgba(255,255,255,0.1)" : hovered ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.04)",
           color: isOpen ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.5)",
+          boxShadow: isOpen
+            ? "inset 0 1px 0 rgba(255,255,255,0.08), 0 2px 8px rgba(0,0,0,0.3)"
+            : hovered
+              ? "inset 0 1px 0 rgba(255,255,255,0.06), 0 2px 6px rgba(0,0,0,0.25)"
+              : "none",
         }}
         transition={{ duration: 0.15 }}
-        className="rounded-xl flex items-center justify-center cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+        className="rounded-[14px] flex items-center justify-center cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
         whileTap={{ scale: 0.88 }}
         onClick={onActivate}
         onHoverStart={() => setHovered(true)}
@@ -123,17 +130,26 @@ export default function Dock({
       className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[100]"
     >
       <motion.div
-        className="flex items-end gap-2 px-3 pb-2 pt-2.5 rounded-2xl"
+        className="flex items-end gap-2 px-3 pb-2 pt-2.5 rounded-[20px]"
         style={{
           background: "var(--dock-bg)",
-          border: "1px solid var(--widget-border)",
-          boxShadow: "0 8px 32px rgba(0,0,0,0.7)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
+          border: "1px solid var(--glass-border)",
+          boxShadow: "0 12px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04)",
+          backdropFilter: "blur(24px) saturate(1.3)",
+          WebkitBackdropFilter: "blur(24px) saturate(1.3)",
         }}
         onMouseMove={(e) => mouseX.set(e.pageX)}
         onMouseLeave={() => mouseX.set(Infinity)}
       >
+        {/* Specular highlight along top edge */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-0 h-px pointer-events-none rounded-[20px]"
+          style={{
+            background: "linear-gradient(90deg, transparent 15%, rgba(255,255,255,0.06) 50%, transparent 85%)",
+          }}
+        />
+
         {dockApps.map((item) => (
           <DockIcon
             key={item.id}
@@ -147,7 +163,7 @@ export default function Dock({
         <span
           aria-hidden="true"
           className="h-8 self-center mx-1 rounded-full"
-          style={{ width: 1, background: "var(--widget-border)" }}
+          style={{ width: 1, background: "var(--glass-border)" }}
         />
 
         {dockLinks.map((item) => (

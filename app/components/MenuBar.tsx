@@ -29,8 +29,22 @@ export default function MenuBar({ focusedApp }: { focusedApp: string | null }) {
   return (
     <div
       className="fixed top-0 left-0 right-0 h-7 z-[100] flex items-center justify-between px-4 select-none"
-      style={{ background: "var(--menubar-bg)", borderBottom: "1px solid var(--window-border-unfocused)" }}
+      style={{
+        background: "var(--menubar-bg)",
+        borderBottom: "1px solid var(--glass-border)",
+        backdropFilter: "blur(20px) saturate(1.2)",
+        WebkitBackdropFilter: "blur(20px) saturate(1.2)",
+      }}
     >
+      {/* Specular highlight along bottom edge */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-px pointer-events-none"
+        style={{
+          background: "linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.04) 50%, transparent 90%)",
+        }}
+      />
+
       <div className="flex items-center gap-3">
         <span className="font-mono text-[11px] font-semibold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.9)" }}>
           ADITYA

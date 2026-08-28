@@ -11,20 +11,20 @@
   /* window / surface */
   --bg-base: #0b0b0b;
   --bg-dot: rgba(255,255,255,0.05);
-  --titlebar-bg: #0e0e0e;
-  --window-bg: #111111;
-  --terminal-bg: #0d0d0d;
-  --menubar-bg: #0b0b0b;
-  --window-border-focused: rgba(255,255,255,0.12);
+  --titlebar-bg: rgba(14,14,14,0.92);
+  --window-bg: rgba(17,17,17,0.88);
+  --terminal-bg: rgba(13,13,13,0.90);
+  --menubar-bg: rgba(11,11,11,0.88);
+  --window-border-focused: rgba(255,255,255,0.14);
   --window-border-unfocused: rgba(255,255,255,0.06);
 
   /* widgets + dock */
-  --widget-bg: #111111;
+  --widget-bg: rgba(17,17,17,0.85);
   --widget-border: rgba(255,255,255,0.08);
   --drag-handle-bg: rgba(255,255,255,0.03);
   --item-separator: rgba(255,255,255,0.05);
-  --dock-bg: rgba(18,18,18,0.92);
-  --tooltip-bg: #1a1a1a;
+  --dock-bg: rgba(18,18,18,0.72);
+  --tooltip-bg: rgba(26,26,26,0.95);
 
   /* accent — used for active states, open indicators, today highlight */
   --accent: rgba(255,255,255,0.65);
@@ -35,25 +35,38 @@
 
   /* separator */
   --separator: rgba(255,255,255,0.07);
+
+  /* ── macOS 27 Golden Gate — Liquid Glass ────────────────────── */
+  --glass-bg: rgba(255,255,255,0.035);
+  --glass-bg-strong: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.09);
+  --glass-border-strong: rgba(255,255,255,0.14);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,0.45), 0 0 0 0.5px rgba(255,255,255,0.04);
+  --glass-shadow-lg: 0 24px 64px rgba(0,0,0,0.55), 0 0 0 0.5px rgba(255,255,255,0.06);
+  --glass-blur: 20px;
+  --glass-radius: 16px;
+  --glass-radius-sm: 12px;
+  --glass-highlight: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0) 50%);
+  --glass-specular: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 40%);
 }
 
 /* ── Amber — deep violet night with warm amber horizon ────────────────────── */
 [data-theme="amber"] {
   --bg-base: rgba(6,4,18,0.65);
   --bg-dot: rgba(255,170,60,0.055);
-  --titlebar-bg: rgba(12,8,32,0.82);
-  --window-bg: rgba(16,10,40,0.88);
-  --terminal-bg: rgba(8,5,24,0.85);
-  --menubar-bg: rgba(6,4,18,0.82);
+  --titlebar-bg: rgba(12,8,32,0.88);
+  --window-bg: rgba(16,10,40,0.85);
+  --terminal-bg: rgba(8,5,24,0.87);
+  --menubar-bg: rgba(6,4,18,0.85);
   --window-border-focused: rgba(255,175,65,0.28);
   --window-border-unfocused: rgba(255,160,50,0.1);
 
-  --widget-bg: rgba(14,9,36,0.90);
+  --widget-bg: rgba(14,9,36,0.86);
   --widget-border: rgba(255,175,65,0.12);
   --drag-handle-bg: rgba(255,175,65,0.04);
   --item-separator: rgba(255,175,65,0.07);
-  --dock-bg: rgba(10,6,28,0.93);
-  --tooltip-bg: rgba(12,8,32,0.98);
+  --dock-bg: rgba(10,6,28,0.75);
+  --tooltip-bg: rgba(12,8,32,0.96);
 
   --accent: rgba(255,175,65,0.9);
   --accent-subtle: rgba(255,175,65,0.16);
@@ -63,25 +76,32 @@
   --text-secondary: rgba(255,215,150,0.48);
   --text-muted: rgba(255,200,120,0.26);
   --text-faint: rgba(255,185,90,0.2);
+
+  --glass-bg: rgba(255,175,65,0.035);
+  --glass-bg-strong: rgba(255,175,65,0.06);
+  --glass-border: rgba(255,175,65,0.09);
+  --glass-border-strong: rgba(255,175,65,0.14);
+  --glass-highlight: linear-gradient(135deg, rgba(255,175,65,0.07) 0%, rgba(255,175,65,0) 50%);
+  --glass-specular: linear-gradient(180deg, rgba(255,175,65,0.06) 0%, rgba(255,175,65,0) 40%);
 }
 
 /* ── Crimson — near-black base with deep crimson accents ──────────────────── */
 [data-theme="crimson"] {
   --bg-base: rgba(10,1,3,0.68);
   --bg-dot: rgba(200,18,38,0.055);
-  --titlebar-bg: rgba(18,2,5,0.84);
-  --window-bg: rgba(22,3,7,0.90);
-  --terminal-bg: rgba(14,2,4,0.86);
-  --menubar-bg: rgba(10,1,3,0.84);
+  --titlebar-bg: rgba(18,2,5,0.90);
+  --window-bg: rgba(22,3,7,0.87);
+  --terminal-bg: rgba(14,2,4,0.88);
+  --menubar-bg: rgba(10,1,3,0.88);
   --window-border-focused: rgba(210,25,50,0.30);
   --window-border-unfocused: rgba(190,15,35,0.10);
 
-  --widget-bg: rgba(20,2,6,0.90);
+  --widget-bg: rgba(20,2,6,0.86);
   --widget-border: rgba(210,25,50,0.12);
   --drag-handle-bg: rgba(200,18,38,0.04);
   --item-separator: rgba(210,25,50,0.07);
-  --dock-bg: rgba(14,1,4,0.93);
-  --tooltip-bg: rgba(16,2,5,0.98);
+  --dock-bg: rgba(14,1,4,0.75);
+  --tooltip-bg: rgba(16,2,5,0.96);
 
   --accent: rgba(210,30,55,0.9);
   --accent-subtle: rgba(210,30,55,0.18);
@@ -91,25 +111,32 @@
   --text-secondary: rgba(255,140,140,0.48);
   --text-muted: rgba(255,110,110,0.26);
   --text-faint: rgba(255,100,100,0.2);
+
+  --glass-bg: rgba(210,25,50,0.035);
+  --glass-bg-strong: rgba(210,25,50,0.06);
+  --glass-border: rgba(210,25,50,0.09);
+  --glass-border-strong: rgba(210,25,50,0.14);
+  --glass-highlight: linear-gradient(135deg, rgba(210,25,50,0.07) 0%, rgba(210,25,50,0) 50%);
+  --glass-specular: linear-gradient(180deg, rgba(210,25,50,0.06) 0%, rgba(210,25,50,0) 40%);
 }
 
 /* ── Rust — warm black base with burnt orange accents ─────────────────────── */
 [data-theme="rust"] {
   --bg-base: rgba(12,6,0,0.68);
   --bg-dot: rgba(255,115,25,0.06);
-  --titlebar-bg: rgba(22,10,0,0.84);
-  --window-bg: rgba(28,13,0,0.90);
-  --terminal-bg: rgba(18,8,0,0.86);
-  --menubar-bg: rgba(12,6,0,0.84);
+  --titlebar-bg: rgba(22,10,0,0.90);
+  --window-bg: rgba(28,13,0,0.87);
+  --terminal-bg: rgba(18,8,0,0.88);
+  --menubar-bg: rgba(12,6,0,0.88);
   --window-border-focused: rgba(255,120,35,0.28);
   --window-border-unfocused: rgba(240,100,20,0.10);
 
-  --widget-bg: rgba(24,11,0,0.90);
+  --widget-bg: rgba(24,11,0,0.86);
   --widget-border: rgba(255,120,35,0.12);
   --drag-handle-bg: rgba(255,115,25,0.04);
   --item-separator: rgba(255,115,25,0.07);
-  --dock-bg: rgba(16,7,0,0.93);
-  --tooltip-bg: rgba(18,8,0,0.98);
+  --dock-bg: rgba(16,7,0,0.75);
+  --tooltip-bg: rgba(18,8,0,0.96);
 
   --accent: rgba(255,120,35,0.9);
   --accent-subtle: rgba(255,120,35,0.18);
@@ -119,6 +146,13 @@
   --text-secondary: rgba(255,200,130,0.48);
   --text-muted: rgba(255,180,100,0.26);
   --text-faint: rgba(255,165,80,0.2);
+
+  --glass-bg: rgba(255,115,25,0.035);
+  --glass-bg-strong: rgba(255,115,25,0.06);
+  --glass-border: rgba(255,115,25,0.09);
+  --glass-border-strong: rgba(255,120,35,0.14);
+  --glass-highlight: linear-gradient(135deg, rgba(255,115,25,0.07) 0%, rgba(255,115,25,0) 50%);
+  --glass-specular: linear-gradient(180deg, rgba(255,115,25,0.06) 0%, rgba(255,115,25,0) 40%);
 }
 
 @theme inline {
@@ -176,6 +210,47 @@ body::after {
   opacity: 1;
 }
 
+/* ── Liquid Glass utility classes ─────────────────────────────────────────── */
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--glass-radius);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--glass-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--glass-highlight);
+  pointer-events: none;
+}
+
+.glass-card-sm {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--glass-radius-sm);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--glass-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card-sm::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--glass-highlight);
+  pointer-events: none;
+}
+
 /* Shared widget classes — avoids duplicating var() across every widget file */
 .widget-handle {
   height: 22px;
@@ -184,18 +259,20 @@ body::after {
   justify-content: center;
   cursor: grab;
   background: var(--drag-handle-bg);
-  border-top: 1px solid var(--widget-border);
-  border-left: 1px solid var(--widget-border);
-  border-right: 1px solid var(--widget-border);
-  border-radius: 8px 8px 0 0;
+  border-top: 1px solid var(--glass-border);
+  border-left: 1px solid var(--glass-border);
+  border-right: 1px solid var(--glass-border);
+  border-radius: var(--glass-radius) var(--glass-radius) 0 0;
 }
 .widget-handle:active { cursor: grabbing; }
 
 .widget-body {
   background: var(--widget-bg);
-  border: 1px solid var(--widget-border);
+  border: 1px solid var(--glass-border);
   border-top: none;
-  border-radius: 0 0 8px 8px;
+  border-radius: 0 0 var(--glass-radius) var(--glass-radius);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
 }
 
 /* NowPlaying "equaliser" bars — animation keyframes shared by the EqBars component. */
