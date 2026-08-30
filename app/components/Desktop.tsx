@@ -162,7 +162,13 @@ export default function Desktop({
             offsetX={win.offsetX}
             offsetY={win.offsetY}
           >
-            <Section compact {...extraProps} {...terminalProps} {...projectsProps} />
+            <Section
+              compact
+              isFocused={focusedWindow === win.id}
+              {...extraProps}
+              {...terminalProps}
+              {...projectsProps}
+            />
           </MacWindow>
         )
       })}
