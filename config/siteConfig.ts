@@ -130,7 +130,7 @@ export const siteConfig: SiteConfig = {
   social: {
     github: `https://github.com/${GITHUB}`,
     twitter: `https://x.com/${TWITTER}`,
-    blog: `https://github.com/${GITHUB}`,
+    blog: `/blog`,
     githubUsername: GITHUB,
     twitterHandle: TWITTER,
     linkedin: "https://www.linkedin.com/in/aditya-singh-khichi/",
