@@ -39,7 +39,7 @@ export const terminal: TerminalConfig = {
     "I ship production-grade pipelines, RAG engines, and full-stack products.",
   ],
   skills: [
-    "Languages:     Go · JavaScript · TypeScript · Python · Java · C",
+    "Languages:     Go · JavaScript · TypeScript · Python · C",
     "Frontend:      React · Next.js · TanStack Query · Zustand · Framer Motion",
     "Backend:       Node.js · Express · Bun · FastAPI · WebSockets · GraphQL",
     "Generative AI: MCP · Agents · RAG · Vector DBs · LangGraph · Langchain",
