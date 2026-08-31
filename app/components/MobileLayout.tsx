@@ -21,6 +21,8 @@ const NAV = [
 ]
 
 const BORDER = "1px solid rgba(255,255,255,0.07)"
+// Keep section anchors clear of the sticky status bar (44px) and nav (36px).
+const STICKY_HEADER_HEIGHT = 80
 
 export default function MobileLayout({
   posts,
@@ -117,27 +119,27 @@ export default function MobileLayout({
       </nav>
 
       {/* Sections */}
-      <section id="about" style={{ borderBottom: BORDER }}>
+      <section id="about" style={{ borderBottom: BORDER, scrollMarginTop: STICKY_HEADER_HEIGHT }}>
         <Hero />
       </section>
 
-      <section id="experience" style={{ borderBottom: BORDER }}>
+      <section id="experience" style={{ borderBottom: BORDER, scrollMarginTop: STICKY_HEADER_HEIGHT }}>
         <Experience compact />
       </section>
 
-      <section id="projects" style={{ borderBottom: BORDER }}>
+      <section id="projects" style={{ borderBottom: BORDER, scrollMarginTop: STICKY_HEADER_HEIGHT }}>
         <Projects compact initialSlug={initialProjectSlug} />
       </section>
 
-      <section id="writing" style={{ borderBottom: BORDER }}>
+      <section id="writing" style={{ borderBottom: BORDER, scrollMarginTop: STICKY_HEADER_HEIGHT }}>
         <Blogs compact posts={posts} />
       </section>
 
-      <section id="contact" style={{ borderBottom: BORDER }}>
+      <section id="contact" style={{ borderBottom: BORDER, scrollMarginTop: STICKY_HEADER_HEIGHT }}>
         <Contact compact />
       </section>
 
-      <section id="resume" style={{ borderBottom: BORDER }}>
+      <section id="resume" style={{ borderBottom: BORDER, scrollMarginTop: STICKY_HEADER_HEIGHT }}>
         <Resume compact />
       </section>
 
