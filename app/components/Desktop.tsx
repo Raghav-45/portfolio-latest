@@ -116,7 +116,7 @@ export default function Desktop({
   ]
 
   if (isMobile === null) return null
-  if (isMobile) return <MobileLayout posts={posts} initialProjectSlug={deeplink?.window === "projects" ? deeplink.slug : undefined} />
+  if (isMobile) return <MobileLayout posts={posts} initialProjectSlug={deeplink?.window === "projects" ? deeplink.slug : undefined} initialSection={deeplink?.window} />
 
   const focusedTitle = focusedWindow ? windows.find((w) => w.id === focusedWindow)?.title ?? null : null
 
