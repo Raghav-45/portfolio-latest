@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
 import Hero from "./Hero"
 import Experience from "./sections/Experience"
 import Projects from "./sections/Projects"
@@ -48,6 +49,7 @@ export default function MobileLayout({
 
   const [time, setTime] = useState("")
   const [activeId, setActiveId] = useState("about")
+  const [isBrandCompact, setIsBrandCompact] = useState(false)
 
   useEffect(() => {
     const update = () => {
@@ -78,6 +80,8 @@ export default function MobileLayout({
         }
 
         setActiveId((currentId) => currentId === nextId ? currentId : nextId)
+        const compact = window.scrollY > 12
+        setIsBrandCompact((current) => current === compact ? current : compact)
       })
     }
 
@@ -105,10 +109,44 @@ export default function MobileLayout({
         className="sticky top-0 z-50 flex items-center justify-between px-5"
         style={{ height: 44, background: "rgba(11,11,11,0.96)", borderBottom: BORDER, backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
       >
-        <span className="font-mono text-[11px] font-semibold uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.9)" }}>
-          {/* Initials — edit siteConfig.personal.initials */}
-          {siteConfig.personal.initials}
-        </span>
+        <motion.div
+          className="relative h-5 overflow-hidden font-mono text-[11px] font-semibold uppercase tracking-widest"
+          animate={{ width: isBrandCompact ? 23 : 58 }}
+          transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <span className="sr-only">{siteConfig.personal.firstName}</span>
+          {Array.from(siteConfig.personal.firstName).map((letter, index) => {
+            const isInitial = index < siteConfig.personal.initials.length
+            const fullLeft = index * 9
+            const compactLeft = index === 0 ? 0 : 10
+
+            return (
+              <motion.span
+                key={`${letter}-${index}`}
+                className="absolute top-0 whitespace-nowrap"
+                aria-hidden="true"
+                initial={false}
+                animate={{
+                  left: isBrandCompact ? compactLeft : fullLeft,
+                  opacity: isBrandCompact ? (isInitial ? 1 : 0) : 1,
+                  scale: isBrandCompact ? (isInitial ? 1 : 0.55) : 1,
+                  filter: isBrandCompact
+                    ? (isInitial ? "blur(0px)" : "blur(2px)")
+                    : "blur(0px)",
+                }}
+                transition={{
+                  left: { duration: 0.34, delay: isBrandCompact ? index * 0.025 : (5 - index) * 0.02, ease: [0.22, 1, 0.36, 1] },
+                  opacity: { duration: 0.2, delay: isBrandCompact ? 0.14 + index * 0.025 : 0.04 },
+                  scale: { duration: 0.28, delay: isBrandCompact ? index * 0.025 : 0.02 },
+                  filter: { duration: 0.2, delay: isBrandCompact ? 0.14 + index * 0.025 : 0.04 },
+                }}
+                style={{ color: "rgba(255,255,255,0.9)" }}
+              >
+                {letter}
+              </motion.span>
+            )
+          })}
+        </motion.div>
         <span className="font-mono text-[11px]" style={{ color: "rgba(255,255,255,0.35)" }}>
           {time}
         </span>
