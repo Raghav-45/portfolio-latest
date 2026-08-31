@@ -50,12 +50,6 @@ _Drop a screenshot or GIF here (`public/preview.png`) to give visitors a first i
 
 ## Setup
 
-> **Already cloned?** Re-clone the repo. Git history was rewritten and your local copy has diverged.
-> ```bash
-> rm -rf portfolio-latest
-> git clone https://github.com/Raghav-45/portfolio-latest.git
-> ```
-
 Requires **Node 20+**. pnpm is recommended but npm / yarn / bun all work.
 
 ```bash
