@@ -168,7 +168,10 @@ export default function Safari({
               onFocus={(e) => {
                 setEditing(true)
                 if (!onStart) setInput(current)
-                requestAnimationFrame(() => e.currentTarget.select())
+                // SyntheticEvent.currentTarget is null once this handler
+                // returns, so capture the input before deferring selection.
+                const input = e.currentTarget
+                requestAnimationFrame(() => input.select())
               }}
               onBlur={() => {
                 setEditing(false)
