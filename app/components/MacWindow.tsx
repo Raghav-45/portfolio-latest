@@ -86,6 +86,10 @@ export default function MacWindow({
             width: `min(${width}px, calc(100vw - 32px))`,
             zIndex,
             outline: "none",
+            borderRadius: 16,
+            background: "var(--window-bg)",
+            backdropFilter: "blur(24px) saturate(1.4)",
+            WebkitBackdropFilter: "blur(24px) saturate(1.4)",
           }}
           drag
           dragControls={dragControls}
@@ -127,8 +131,6 @@ export default function MacWindow({
               boxShadow: isFocused
                 ? "0 32px 80px rgba(0,0,0,0.65), 0 0 0 0.5px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.05)"
                 : "0 16px 48px rgba(0,0,0,0.5), 0 0 0 0.5px rgba(255,255,255,0.03)",
-              backdropFilter: "blur(24px) saturate(1.4)",
-              WebkitBackdropFilter: "blur(24px) saturate(1.4)",
               transition: "box-shadow 0.25s ease, border-color 0.25s ease",
             }}
           >
@@ -212,7 +214,6 @@ export default function MacWindow({
             {/* Content */}
             <div
               className="flex-1 overflow-y-auto overflow-x-hidden mac-scrollbar"
-              style={{ background: "var(--window-bg)" }}
             >
               {children}
             </div>
