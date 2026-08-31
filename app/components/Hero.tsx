@@ -33,7 +33,7 @@ export default function Hero({ compact = false }: { compact?: boolean }) {
 
       {/* Footer */}
       <div
-        className="flex items-center justify-between mt-auto pt-5"
+        className="flex items-center justify-between pt-5 mt-5 md:mt-auto"
         style={{ borderTop: "1px solid var(--separator)" }}
       >
         <div className="flex items-center gap-3">
