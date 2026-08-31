@@ -47,3 +47,4 @@ next-env.d.ts
 /resume/*.out
 /resume/*.pdf
 /resume/*.synctex.gz
+.gstack/

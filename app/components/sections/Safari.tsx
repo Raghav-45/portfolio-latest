@@ -63,7 +63,13 @@ function prettyHost(url: string): string {
   }
 }
 
-export default function Safari({ compact = false }: { compact?: boolean }) {
+export default function Safari({
+  compact = false,
+  isFocused = true,
+}: {
+  compact?: boolean
+  isFocused?: boolean
+}) {
   // History stack — we control back/forward instead of relying on iframe.history,
   // which is inaccessible across origins anyway.
   const [history, setHistory] = useState<string[]>([START_URL])
@@ -266,6 +272,7 @@ export default function Safari({ compact = false }: { compact?: boolean }) {
                 height: "153.85%",
                 transform: "scale(0.65)",
                 transformOrigin: "0 0",
+                pointerEvents: isFocused ? "auto" : "none",
               }}
             />
           </>

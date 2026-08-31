@@ -37,11 +37,11 @@ export default function Hero({ compact = false }: { compact?: boolean }) {
         style={{ borderTop: "1px solid var(--separator)" }}
       >
         <div className="flex items-center gap-3">
-          <div className="relative w-8 h-8 rounded-md overflow-hidden flex-none">
+          <div className="relative w-8 h-8 rounded-xl overflow-hidden flex-none glass-card-sm" style={{ padding: 0 }}>
             {/* Avatar — edit siteConfig.personal.avatar and drop your image into /public.
                 alt="" because the name is already rendered next to it (avoid double announcement).
                 priority because the avatar is above the fold on every viewport. */}
-            <Image src={personal.avatar} alt="" fill priority className="object-cover" />
+            <Image src={personal.avatar} alt="" fill priority sizes="32px" className="object-cover" />
           </div>
           <div>
             <p className="font-mono text-[10px] uppercase tracking-widest" style={{ color: "var(--text-secondary)" }}>
@@ -65,7 +65,7 @@ export default function Hero({ compact = false }: { compact?: boolean }) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              className="w-8 h-8 flex items-center justify-center rounded-lg transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded-xl transition-colors"
               style={{ color: "var(--text-secondary)" }}
               onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text-primary)")}
               onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-secondary)")}
