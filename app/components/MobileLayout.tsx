@@ -60,23 +60,39 @@ export default function MobileLayout({
     return () => clearInterval(id)
   }, [])
 
-  // Track active section via IntersectionObserver
+  // Track the section whose top edge has reached the content area below the
+  // sticky headers. A visibility-ratio observer does not work for long
+  // sections like Résumé because 40% of the section can never fit onscreen.
   useEffect(() => {
-    const observers: IntersectionObserver[] = []
-    NAV.forEach(({ id }) => {
-      const el = document.getElementById(id)
-      if (!el) return
-      const obs = new IntersectionObserver(
-        ([entry]) => { if (entry.isIntersecting) setActiveId(id) },
-        { threshold: 0.4 }
-      )
-      obs.observe(el)
-      observers.push(obs)
-    })
-    return () => observers.forEach((o) => o.disconnect())
+    let frame = 0
+    const updateActiveSection = () => {
+      if (frame) return
+      frame = requestAnimationFrame(() => {
+        frame = 0
+        const marker = STICKY_HEADER_HEIGHT + 1
+        let nextId = NAV[0].id
+
+        for (const { id } of NAV) {
+          const el = document.getElementById(id)
+          if (el && el.getBoundingClientRect().top <= marker) nextId = id
+        }
+
+        setActiveId((currentId) => currentId === nextId ? currentId : nextId)
+      })
+    }
+
+    updateActiveSection()
+    window.addEventListener("scroll", updateActiveSection, { passive: true })
+    window.addEventListener("resize", updateActiveSection)
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection)
+      window.removeEventListener("resize", updateActiveSection)
+      if (frame) cancelAnimationFrame(frame)
+    }
   }, [])
 
   const scrollTo = (id: string) => {
+    setActiveId(id)
     const el = document.getElementById(id)
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" })
   }
