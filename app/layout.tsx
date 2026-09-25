@@ -78,7 +78,7 @@ const personSchema = {
     siteConfig.personal.username,
   ],
   url: SITE_URL,
-  image: siteConfig.personal.avatar,
+  image: new URL(siteConfig.personal.avatar, SITE_URL).toString(),
   jobTitle: siteConfig.personal.role,
   description: siteConfig.personal.tagline,
   email: `mailto:${siteConfig.contact.email}`,

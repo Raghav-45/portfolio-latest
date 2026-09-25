@@ -37,7 +37,7 @@ export default function Hero({ compact = false }: { compact?: boolean }) {
         style={{ borderTop: "1px solid var(--separator)" }}
       >
         <div className="flex items-center gap-3">
-          <div className="relative w-8 h-8 rounded-xl overflow-hidden flex-none glass-card-sm" style={{ padding: 0 }}>
+          <div className="relative w-8 h-8 rounded-full overflow-hidden flex-none" style={{ padding: 0 }}>
             {/* Avatar — edit siteConfig.personal.avatar and drop your image into /public.
                 alt="" because the name is already rendered next to it (avoid double announcement).
                 priority because the avatar is above the fold on every viewport. */}
