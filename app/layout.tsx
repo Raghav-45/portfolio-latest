@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   authors: [{ name: siteConfig.personal.fullName, url: SITE_URL }],
   creator: siteConfig.personal.fullName,
   publisher: siteConfig.personal.fullName,
+  icons: {
+    icon: siteConfig.personal.avatar,
+  },
   alternates: {
     canonical: "/",
   },

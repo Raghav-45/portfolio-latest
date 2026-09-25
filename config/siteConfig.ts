@@ -122,7 +122,8 @@ export const siteConfig: SiteConfig = {
       "Building data platforms and AI-powered systems at a YC W26 startup. I ship production-grade pipelines, RAG engines, and full-stack products — from React to PostgreSQL to AWS.",
     location: "New Delhi, India",
     age: getAge(DOB),
-    avatar: "/avatar.png",
+    // Keep the website profile synced with the GitHub profile photo.
+    avatar: `https://github.com/${GITHUB}.png?size=512`,
     username: GITHUB,
   },
 
