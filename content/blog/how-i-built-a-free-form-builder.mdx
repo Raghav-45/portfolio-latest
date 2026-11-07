@@ -1,0 +1,110 @@
+---
+title: "How I Built Thunder Forms, a Free Form Builder"
+date: "2026-11-07"
+description: "The build story behind Thunder Forms: Drive uploads on public links, server-side quiz grading, AI drafting through tool calls, and the limits I chose to keep."
+tags: ["build log", "react", "typescript"]
+---
+
+Thunder Forms is a free form builder at [thunderforms.in](https://www.thunderforms.in). Free where form builders usually charge most: file uploads cost nothing, and respondents fill public links without signing up anywhere. The first commit went into the repo on Oct 31, 2024. I have been building it alone since, and it now runs the whole set of features a forms product is expected to have: a template library, Google Forms import, Sheets sync, CSV export, and a responses dashboard.
+
+Two years in, here is what the code actually taught me. The drag-and-drop canvas was the easy half. Every hard problem in this product sits at a boundary: what the server validates, what the browser is allowed to hold, and which shape one piece of code may hand to another.
+
+## A form is one JSON tree
+
+Every form is a single tree of pages, sections, and fields, persisted as one JSON column. The builder edits it, the respondent renderer reads it, the validator checks it, the AI generator produces it, the Google Forms importer converts into it, and the public form endpoint ships it.
+
+```ts
+// The persisted shape (trimmed from form-structure.ts)
+interface FormStructure {
+  pages: FormPage[]
+  layout?: FormLayout
+  quiz?: QuizSettings
+  theme?: StoredFormTheme
+}
+
+interface FormPage {
+  description?: string
+  id: string
+  sections: FormSection[]
+  title?: string
+}
+```
+
+My first instinct was separate structures for builder state, published form, and incoming responses. That would have meant a converter for every new feature. Collapsing to one canonical tree is the decision that made everything else cheap. Themes and quiz settings ride along inside the same tree. When a form arrives from the AI generator, a template, or the Google Forms importer, all three hand over this exact shape and the builder has nothing new to learn.
+
+## One registry, two validators
+
+Each field type is one file containing its config type, its renderer, its settings editor, its default config, and its zod schema. Everything else is dispatch over one registry. Adding a field type means adding a file and registering it. It never means touching three layers of the app.
+
+```ts
+// elements/base.ts: the contract every field definition implements
+export abstract class FormFieldDefinition<
+  TConfig extends BaseFieldConfig = BaseFieldConfig,
+> {
+  abstract readonly identifier: TConfig["uniqueIdentifier"]
+  abstract readonly component: React.FC<FieldProps<TConfig>>
+  abstract readonly editor: React.FC<EditorProps<TConfig> & { isOpen: boolean }>
+  abstract defaultConfig(): TConfig
+  abstract getValidationSchema(field: TConfig): z.ZodTypeAny
+}
+```
+
+Validation is where two dispatchers earn their keep. One validates a field's own config while its owner edits it in the builder. The other validates a submitted answer on the way in, and the public submit API shares that dispatcher with the respondent view, so a form cannot validate one way in preview and another way live.
+
+The server also has to check the structure of a generated tree, and it must do that without importing any React component. A server-safe allow-list of field identifiers lives in the same file as the tree contract, so a bad generated tree fails on the server instead of reaching the browser.
+
+## Uploads without respondent accounts
+
+File upload is the trickiest boundary and the clearest product statement. Other builders put uploads behind a paid tier, and some also put the respondent behind a login. Thunder Forms uploads files from a public link straight into the form owner's Google Drive.
+
+One Google connection is stored per user and encrypted at rest on the server. The browser never holds a refresh token. Each file field can point at its own Drive folder destination, so an owner can route one field into a shared team folder and another into a private archive. The server refreshes the connection and delivers files on the respondent's behalf.
+
+The limits are constants in one file where I can see them:
+
+```ts
+export const FILE_UPLOAD_MIN_FILES = 1
+export const FILE_UPLOAD_MAX_FILES = 10
+export const FILE_UPLOAD_MIN_SIZE_BYTES = 1
+export const FILE_UPLOAD_MAX_SIZE_BYTES = 12 * 1024 * 1024
+```
+
+12 MiB per file, 10 files per field, no asterisks.
+
+## Quizzes grade on the server
+
+Quiz mode reuses the same tree. A `quiz` settings object marks a form as a quiz, fields carry answer keys with per-question points, and grading runs on the server where the full tree already lives.
+
+The boundary that matters is the public view endpoint. Before a form's structure reaches a respondent's browser, it passes through one function:
+
+```ts
+fields: stripQuizAnswerKeys(form.fields),
+```
+
+Answer keys stay in the stored tree, the server grades against them, and the respondent payload never contains them. Score release is a setting: send immediately, or hold for manual review. The result email goes to whichever field the owner marked as the email recipient.
+
+A second storage location for answer keys would have created exactly the drift that the strip function exists to prevent. Keeping them in the one canonical tree is what makes that strip a real boundary.
+
+## AI drafts through tool calls
+
+The generation path refuses to be a prompt that dumps JSON at you. The API route gives the model narrow discovery tools for field specs, defaults for every generated field come from the registry the builder already trusts (`createDefaultFieldConfig`), and after the model answers, a structural validator checks pages, sections, and fields all the way down. A generated tree that is not canonical fails with a 502 and never reaches the builder.
+
+Provider choice is a configuration value: Gemini by default, Groq when `AI_PROVIDER` says so. Template instantiations use the same validated envelope, so an AI draft and a template meet the builder through identical code.
+
+## What I deliberately left out
+
+Some absences are road-map, some are stances.
+
+Conditional logic is the road-map part. Everyone asks for it, and it is the single biggest feature that separates this product from the leaders in the category. It also turns the tree into a graph, which touches the renderer, the submit API, the importer, and analytics at once. I would rather ship it complete than phrase a half version into the product and the docs.
+
+Analytics is the stance part. It covers views, visitors, devices, and referrers, and that is all. No funnel screens yet. A dashboard that reports what was measured beats a dashboard that implies what was inferred, so the four numbers are labeled plainly and the CSV export hands over the rest.
+
+Custom domains are in a third pile: infrastructure I do not want to maintain for free users. Expiry by date or response count, quiz release emails, and Sheets sync cover most of the workflows a custom-domains upsell page would promise.
+
+## What the project changed in me
+
+- One canonical shape beats three convenient ones. Import, AI, templates, and quizzes all became cheap once there was a single tree to hand over.
+- Put validation next to the thing it validates. Co-locating each field's schema with its renderer and editor keeps a field change in one commit instead of a hunt.
+- Trust boundaries are product features. The answer-key strip, the encrypted connection record, and the server-side grade exist so data never lands somewhere its owner did not intend.
+- Say the limitation plainly. The gaps I documented in advance never returned as angry support tickets.
+
+Thunder Forms is live and free at [thunderforms.in](https://www.thunderforms.in). The [template library](https://www.thunderforms.in/templates) is the fastest way to see the canonical tree in action: event registrations, quizzes, and feedback forms all built from the same pages, sections, and fields. If you spot a hole in how I approached any of this, the [contact page](/contact) is open.
